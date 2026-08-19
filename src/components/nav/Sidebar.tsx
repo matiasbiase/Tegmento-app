@@ -11,7 +11,6 @@ import {
   IconFoco as IconFocoTabler,
   IconPolaridad as IconPolaridadTabler,
   IconProbando as IconProbandoTabler,
-  IconManzana,
   IconComoSeLee as IconComoSeLeeTrazo,
   IconRueda as IconRuedaComp,
 } from '@/components/ui/iconos';
@@ -82,18 +81,9 @@ const IconActividades = (
 //
 // ⚠️ REEMPLAZA A `GLIFO_MANZANA`, que era la regla anterior ("el mismo trazo que
 // Cuerpo y el chat"). ⚠️ ESO DEJA DOS MANZANAS EN LA APP: esta en el menú y la
-// de `glifos.tsx` en el chip de Cuerpo y las pastillas. Es exactamente la
-// inconsistencia que se arregló el 03/08, ahora al revés. Está anotado a
-// propósito: si esta gusta, hay que llevar el brillito a `glifos.tsx` y que la
-// manzana sea una sola otra vez.
-const IconAlimentacion = <IconManzana className="size-[21px]" />;
 
-const IconFinanzas = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" className="size-[21px]">
-    <path d="M4 5h16v14l-2.5-1.5L15 19l-3-1.5L9 19l-2.5-1.5L4 19z" />
-    <path d="M8 9h8M8 12.5h5" />
-  </svg>
-);
+// (Los íconos de Finanzas y Alimentación vivían acá: se fueron con sus
+// ítems del menú, que no están en esta copia pública.)
 
 const IconDescubrir = (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" className="size-[21px]">
@@ -256,11 +246,8 @@ const ITEMS: ItemDef[] = [
   // ⚠️ La PANTALLA sigue existiendo en `/objetivos`, y varias cosas la linkean
   // (el "Sí, anotarlo" del bot, el "Arrancar otro" del cierre, `#reflexión`).
   // Lo que se saca es el ítem del menú, no la ruta.
-  { href: '/finanzas', etiqueta: 'Finanzas', icono: IconFinanzas, premium: true },
-  // Alimentación entra al menú el 02/08. Va con Finanzas porque son los dos
-  // apartados profundos (ver `docs/estrategia-modulos.md`), y arriba porque de
-  // los dos se entra a agregar algo.
-  { href: '/alimentacion', etiqueta: 'Alimentación', icono: IconAlimentacion, premium: true },
+  // ⚠️ ACÁ IBAN FINANZAS Y ALIMENTACIÓN, los dos módulos `premium: true`.
+  // No están en esta copia pública del código; viven en el repo privado.
 ];
 
 // ⚠️⚠️ ACÁ VIVÍA `HERRAMIENTAS`, EL ARRAY DE LA CAJA QUE SE DESPLEGABA, Y MURIÓ

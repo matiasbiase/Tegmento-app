@@ -346,7 +346,7 @@ export default async function CuerpoPage() {
       // que lo dice.
       valor: comidasDeHoy > 0 ? `${comidasDeHoy} ${comidasDeHoy === 1 ? 'anotada' : 'anotadas'}` : null,
       detalle: comidasHoy.map((c) => ({ texto: c.nota, hora: c.hora })),
-      verEn: { href: '/alimentacion', etiqueta: comidasDeHoy > 0 ? 'Ver todo en Alimentación' : 'Anotar en Alimentación' },
+      // Sin `verEn`: llevaba a /alimentacion, que no está en esta copia.
       color: 'var(--color-verde)',
       deep: 'var(--color-verde)',
     },

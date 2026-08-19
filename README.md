@@ -6,7 +6,9 @@ own model, and nothing leaves it.
 > **A code snapshot.** This repository is the current state of a private
 > project, published as a single commit so the code can be read. It isn't the
 > working repo: there's no history here, and the working notes, design
-> documents and product strategy are deliberately not included.
+> documents and product strategy are deliberately not included. Neither are the
+> two paid modules (finances and food), which stay in the private repo — the
+> nav entries that pointed at them are gone with them.
 
 ## What it is
 
