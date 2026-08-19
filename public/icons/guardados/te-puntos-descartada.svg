@@ -1,0 +1,9 @@
+<!-- "La T de puntos" (26/07/2026). Estuvo aplicada unas horas. Matías terminó
+     eligiendo la neurona despareja (H). Se guarda porque la idea de que la marca
+     sea a la vez red de nodos y la inicial sigue siendo buena. -->
+<svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6c78ee"/><stop offset="1" stop-color="#8a7cf0"/></linearGradient></defs>
+  <rect width="180" height="180" fill="url(#g)"/>
+  <path d="M38 54h104M90 54v90" stroke="#fff" stroke-width="7.5" stroke-linecap="round" stroke-dasharray="2 14" opacity=".6"/>
+  <g fill="#fff"><circle cx="38" cy="54" r="11"/><circle cx="72" cy="54" r="11"/><circle cx="108" cy="54" r="11"/><circle cx="142" cy="54" r="11"/><circle cx="90" cy="86" r="11"/><circle cx="90" cy="117" r="11"/><circle cx="90" cy="145" r="7.5"/></g>
+</svg>

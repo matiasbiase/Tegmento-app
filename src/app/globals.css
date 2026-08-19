@@ -1,0 +1,1199 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  /* "mono" es histórico: hoy es la redondeada de labels/kickers (Quicksand). */
+  --font-mono: var(--font-quicksand), ui-rounded, system-ui, sans-serif;
+  --font-serif: var(--font-newsreader), Georgia, serif;
+}
+
+@theme {
+  --radius-app: 12px;
+  /* Ancho del menú lateral. Vive acá porque lo usan el panel y el
+     desplazamiento del contenido, y tienen que coincidir sí o sí. */
+  --menu-ancho: min(300px, 78vw);
+
+  /* Tema claro: blanco / negro / naranja */
+  --color-bg: #ffffff;
+  --color-surface: #f6f5f2;
+  --color-borde: #e4e1d9;
+  --color-crema: #1a1815; /* texto principal (casi negro) */
+  --color-crema-soft: #4a463f; /* texto secundario */
+  --color-muted: #8a857a; /* metadata gris */
+  --color-ambar: #e8861b;
+  --color-ambar-dim: #c06f12; /* naranja oscuro — texto chico sobre blanco */
+  --color-ambar-deep: #d99836; /* borde naranja sobre blanco */
+  --color-teal: #1d8a72;
+  --color-teal-deep: #9fd9c8;
+  --color-brick: #c0492f;
+
+  /* Panel oscuro FIJO — la "isla" del árbol de bifurcaciones (no cambia con el tema) */
+  --color-panel: #1b1916;
+  --color-panel-borde: #34302a;
+  --color-panel-grid: #2a2723;
+  --color-panel-text: #ede6d6;
+  --color-panel-soft: #c9bfa9;
+  --color-panel-muted: #8a8070;
+  --color-burbuja: #fbeede; /* burbuja propia / input — naranja muy claro */
+
+  /* ============================================================
+     PALETA NUEVA — rediseño lila (prototipo "Bitácora Simple").
+     Migración incremental: convive con los tokens de arriba hasta
+     que todas las pantallas estén migradas.
+     ============================================================ */
+  --color-lavanda: #f3f3fb; /* fondo de la app */
+  --color-lavanda-2: #e3e3f1; /* fondo más saturado / detrás de tarjetas */
+  --color-blanco: #ffffff; /* superficie de tarjetas */
+  --color-tinta: #1c1c2b; /* texto principal */
+  --color-tinta-soft: #56566c; /* texto secundario */
+  /* Los grises de texto están medidos contra el papel (#f3f3fb), que es el
+     fondo más exigente de los dos (el otro es el blanco de las tarjetas).
+     El anterior #9999ad daba 2.53:1 — abajo del 4.5:1 que pide WCAG AA para
+     texto normal — y es el gris con el que está escrita media app. */
+  --color-niebla: #6d6d87; /* metadata / labels · 4.54:1 sobre papel */
+  --color-niebla-2: #c4c4d4; /* chevrons / inactivo (decorativo, no texto) */
+  --color-niebla-3: #b0b0c0; /* letras de días sin seleccionar */
+  --color-iris: #6c78ee; /* acento principal (lila) */
+  --color-iris-2: #8a7cf0; /* segundo stop del gradiente lila */
+  --color-iris-soft: #eaebfc; /* tinte lila claro (chips, fondos suaves) */
+  --color-iris-borde: #6c78ee29; /* borde lila sutil ~16% */
+  --color-iris-deep: #4a56c8; /* texto lila sobre fondo claro */
+  --color-verde: #3d9b80; /* acento verde (salud / confirmado) */
+  --color-verde-tint: #e3f1ec;
+  --color-oro: #b06a1a; /* acento ámbar (mails / importante) */
+  --color-oro-tint: #fbeede;
+  --color-rosa: #c25571; /* acento rosa/ladrillo (contexto / sensible) */
+  --color-rosa-tint: #fbe7ec;
+  --color-alerta: #e5484d; /* evento cercano (punto rojo del selector de días) */
+
+  /* ── EL FUEGO DE LA RACHA, QUE NO ES EL ROJO DE ERROR (18/08) ──────────────
+     Matías pidió la racha en rojo. El rojo que la app ya tenía es `brick`, y
+     brick significa **algo salió mal**: el error del login, el micrófono
+     grabando, el ánimo "mal" en `EvolucionAnimo`. Pintar la racha con ese rojo
+     le daría a tu mejor dato de la pantalla el color de los problemas.
+     Así que el rojo de la racha es SUYO: naranja quemado, que se lee como llama
+     y no como alerta. Es la misma regla que ya está escrita en `ChipsDeHoy`
+     ("el verde ya significa otra cosa acá arriba"), aplicada al rojo. */
+  --color-fuego: #d9542e; /* la llama de la racha */
+  --color-fuego-alto: #f0a03c; /* el amarillo de la punta, primer stop del degradé */
+  --color-fuego-deep: #a83c22; /* el número, sobre el tinte */
+  --color-fuego-tint: #fbe7e2; /* la pastilla */
+
+  /* Estos cinco estaban escritos a mano decenas de veces en los componentes.
+     Al pasar a token, cambiar cualquiera de ellos vuelve a ser una sola línea. */
+  --color-papel-2: #f8f8fc; /* fondo de campo dentro de una tarjeta blanca */
+  --color-gris-tint: #eef0f4; /* chip neutro (estado sin color propio) */
+  --color-gris-tint-2: #f0f0f6; /* separadores y fondos aún más suaves */
+  --color-oro-2: #c79238; /* ámbar medio: la "confianza media" del Analista */
+  --color-ambar-tint: #faf0dd; /* fondo del ámbar medio */
+  --color-iris-tint-2: #eef0fe; /* lila apenas insinuado */
+
+  /* ── Paleta de los anillos de "Hoy" (26/07/2026) ───────────────────────────
+     Un solo vocabulario, en oklch, junto con los cuatro del ánimo que viven en
+     lib/animo.ts. La regla que la ordena: el anillo de Ánimo TOMA el color del
+     mood (cambia si estás genial o de bajón), así que ningún hue de anillo fijo
+     puede quedar a menos de 40° de un hue de ánimo — si no, tarde o temprano
+     dos anillos del mismo dibujo se pisan.
+     Ánimo ocupa 25 (bajón) · 150 (bien) · 195 (genial) · 250 (neutral, casi
+     gris, no reserva hue). Libres y elegidos: 265 índigo, 310 violeta, 350 rosa.
+     Ni un amarillo: a esta luminosidad sale mostaza.
+     Cada uno tiene su `-deep` porque el tono vivo NO tiene contraste como texto. */
+  --color-anillo-suenio: oklch(0.58 0.15 265);
+  --color-anillo-suenio-deep: oklch(0.47 0.15 265);
+  --color-anillo-activid: oklch(0.6 0.17 310);
+  --color-anillo-activid-deep: oklch(0.47 0.16 310);
+  /* ⚠️ ENERGÍA ERA HUE 350 (rosa) Y LIBIDO ES `--color-rosa` (#c25571, hue ~15):
+     dos rosas casi iguales para las dos señales que SIEMPRE van juntas, en el
+     aro y ahora también en los botones. Matías, 06/08: *"libido y energía tienen
+     el mismo color, está muy parecido, entonces no sabés cuál es cuál"*.
+     Energía pasa a ámbar (hue 70), que además es lo que ya significa energía en
+     medio mundo y no choca con ningún otro anillo: sueño 265, actividad 310,
+     libido ~15. */
+  --color-anillo-cuerpo: oklch(0.7 0.14 70);
+  --color-anillo-cuerpo-deep: oklch(0.52 0.13 70);
+  --color-anillo-pista: #ececf5; /* el surco vacío del anillo */
+}
+
+/* ⚠️ EL FONDO DE LA APP SE DEFINE UNA SOLA VEZ, ACÁ. Lo usan `html`, `body` y la
+   clase `.fondo-app`. Estuvo duplicado y se pagó dos veces:
+     · 27/07, arriba: una costura horizontal debajo del reloj;
+     · 29/07, abajo: una franja distinta debajo del composer, que Matías leyó
+       como que la pantalla "quedaba elevada". No estaba elevada: el fondo se
+       terminaba antes que la pantalla y el ojo lee ese corte como un
+       desplazamiento.
+   El culpable es siempre el mismo: `body` tenía el lavanda PLANO y `.fondo-app`
+   el lavanda MÁS las dos auras, una de ellas anclada abajo a la izquierda. Donde
+   el contenedor no llegaba, asomaba un lavanda sin aura.
+   Calzan exacto porque va con `background-attachment: fixed`: los gradientes se
+   anclan al viewport y no a su elemento, así que da igual dónde empiece cada uno. */
+:root {
+  --fondo-app:
+    radial-gradient(72% 44% at 90% -6%, rgba(138, 124, 240, 0.14), transparent 62%),
+    radial-gradient(64% 40% at -8% 104%, rgba(194, 85, 113, 0.08), transparent 62%),
+    var(--color-lavanda);
+}
+
+html {
+  background: var(--fondo-app);
+  background-attachment: fixed;
+  /* ⚠️ SIN ESTO EL MENÚ LATERAL ROMPE TODO (27/07). Al abrirlo, el contenido se
+     corre a la derecha (`.desplaza-menu`) y sobresale de la pantalla: eso vuelve
+     la página **scrolleable de costado**. Con el dedo la arrastrabas, quedaba
+     corrida sola un rato, se metía por encima del panel y había que tocar para
+     que volviera.
+     `clip` y no `hidden`: `hidden` crea un contenedor de scroll y eso rompe los
+     `position: sticky` de adentro (el encabezado del chat, sin ir más lejos).
+     `clip` recorta y no crea nada. */
+  overflow-x: clip;
+  /* Y esto corta el rebote horizontal del iPhone, que es lo que dejaba la
+     pantalla "levantada" hasta que la tocabas. */
+  overscroll-behavior-x: none;
+}
+body {
+  background: var(--fondo-app);
+  background-attachment: fixed;
+  color: var(--color-tinta);
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+}
+
+/* Foco de teclado. En el iPhone no se ve nunca (no hay tab), pero en la Mac sin
+   esto no se sabe dónde estás parado al tabular: el navegador dibuja su anillo
+   por defecto y varias clases de Tailwind lo apagan. Es :focus-visible, así que
+   no aparece al tocar con el dedo ni al hacer click. */
+:focus-visible {
+  outline: 2px solid var(--color-iris);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Termina en `transform: none`, no en `translateY(0)`: las dos se usan con
+   `animation-fill-mode: both`, así que el elemento se queda con el último
+   fotograma para siempre, y un transform puesto lo deja en una capa de
+   composición donde el texto pierde nitidez en iOS. Ver la nota larga de
+   `subir`, que es donde se cazó (13/08). */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes gira {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes flotar {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes latido {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes resplandor {
+  0%,
+  100% {
+    box-shadow: 0 0 6px 0 rgba(232, 134, 27, 0.2);
+    border-color: #7a5a2e;
+  }
+  50% {
+    box-shadow: 0 0 20px 2px rgba(232, 134, 27, 0.5);
+    border-color: #e8861b;
+  }
+}
+
+/* Entrada escalonada de los bloques del home: le da vida al abrir. */
+/* ⚠️⚠️ TERMINA EN `transform: none` Y NO EN `translateY(0)` (13/08). Matías:
+   *"arriba de todo la fecha queda borrosa"*, y también el título de Seguimiento
+   al bajar.
+
+   `.stagger > *` usa `animation-fill-mode: both`, así que **el elemento se queda
+   con el último fotograma para siempre**. Con `translateY(0)` eso significa
+   quedarse con un `transform` puesto — y un transform distinto de `none`
+   promueve el elemento a su propia capa de composición en iOS, donde el texto
+   **pierde el antialiasing subpíxel y se ve blando**.
+
+   Los dos valores se ven idénticos: mueven el elemento cero píxeles. Pero
+   `translateY(0)` es "estoy transformado, en cero" y `none` es "no estoy
+   transformado", y solo el segundo deja al texto en la capa normal.
+
+   👉 Por qué se notaba en la fecha y no en el saludo que tiene al lado: el
+   saludo es serif de 32px casi negro y absorbe la degradación; la fecha es mono
+   de 12px en gris claro, que es el texto más frágil de la pantalla. **La capa
+   afecta a todo el bloque: lo que cambia es qué texto lo delata.** */
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Halo que respira detrás del avatar de la IA: el elemento "vivo". */
+@keyframes pulso-avatar {
+  0%,
+  100% {
+    box-shadow:
+      0 4px 14px rgba(108, 120, 238, 0.35),
+      0 0 0 0 rgba(108, 120, 238, 0.28);
+  }
+  50% {
+    box-shadow:
+      0 4px 14px rgba(108, 120, 238, 0.35),
+      0 0 0 7px rgba(108, 120, 238, 0);
+  }
+}
+
+/* Respiración guiada (Calma): crece al inhalar, sostiene, se achica al exhalar.
+   Ciclo de 12s (4s inhalá / 2s sostené / 6s exhalá). Corre en el compositor,
+   así que se mueve sí o sí — no depende de timers ni estado de React. */
+@keyframes respirar {
+  0% {
+    transform: scale(0.5);
+  }
+  33.33% {
+    transform: scale(1.35);
+  }
+  50% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(0.5);
+  }
+}
+
+@layer utilities {
+  .animar-entrada {
+    animation: aparecer 0.25s ease-out both;
+  }
+  .flotar {
+    animation: flotar 0.3s ease both;
+  }
+  /* La flechita de recargar mientras el modelo escribe el resumen. Lenta a
+     propósito: rápida se lee como "cargando" de sistema, y esto tarda segundos.
+     ⚠️ Respeta `prefers-reduced-motion` como todo lo que se mueve en la app. */
+  .gira-lento {
+    animation: gira 1.6s linear infinite;
+  }
+  /* Gradiente de marca (avatares, botón de chat, CTA primario) — estándar §1 */
+  .grad-iris {
+    background-image: linear-gradient(135deg, var(--color-iris), var(--color-iris-2));
+  }
+  /* Esconde la scrollbar en carruseles horizontales (situaciones, recos, focos) */
+  .sin-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .sin-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .resplandor-voz {
+    animation: resplandor 1.6s ease-in-out infinite;
+  }
+  .glow-ambar {
+    box-shadow: 0 0 16px rgba(232, 134, 27, 0.18);
+  }
+  /* Fondo de la app con profundidad: auras muy tenues sobre el lavanda. */
+  .fondo-app {
+    background: var(--fondo-app);
+    background-attachment: fixed;
+  }
+  /* Sombra de tarjeta en dos capas: contacto + difusa, con jerarquía real. */
+  .sombra-card {
+    box-shadow:
+      0 1px 2px rgba(50, 50, 90, 0.05),
+      0 8px 24px rgba(50, 50, 90, 0.07);
+  }
+  /* Entrada escalonada: los hijos directos suben uno tras otro. */
+  /* ── ⚠️⚠️ `backwards` Y NO `both`, Y ACÁ ESTÁ EL ARREGLO DE VERDAD (18/08) ──
+     El 17/08 esto se "arregló" cambiando el último fotograma de `translateY(0)`
+     a `transform: none`, con el razonamiento correcto (ver la nota de arriba).
+     **No alcanzó, y se midió en la app**: el `transform` computado del bloque
+     del saludo seguía siendo `matrix(1, 0, 0, 1, 0, 0)`.
+
+     👉 EL MOTIVO: al interpolar de `translateY(14px)` a `none`, el navegador
+     trabaja con MATRICES, así que el valor final que calcula es la matriz
+     identidad — no la palabra `none`. Y `fill-mode: both` es justamente "quedate
+     con el último valor calculado", así que la matriz queda puesta para siempre.
+     Escribir `none` en el keyframe no cambia nada: lo que se hereda no es lo que
+     escribiste, es lo que se interpoló.
+
+     Con `backwards`, el fotograma inicial se aplica ANTES de arrancar (que es lo
+     único que hacía falta para que no parpadee) y al terminar el elemento vuelve
+     a **su propio estilo**, que no tiene ningún transform. La capa se disuelve y
+     el texto recupera el antialiasing subpíxel.
+
+     ⚠️ Y NO SE PIERDE NADA: `to` deja `opacity: 1` y `transform: none`, que es
+     exactamente el estado natural del elemento. `both` estaba conservando un
+     estado idéntico al que ya tenía. */
+  .stagger > * {
+    animation: subir 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) backwards;
+  }
+  .stagger > *:nth-child(1) {
+    animation-delay: 0.03s;
+  }
+  .stagger > *:nth-child(2) {
+    animation-delay: 0.09s;
+  }
+  .stagger > *:nth-child(3) {
+    animation-delay: 0.15s;
+  }
+  .stagger > *:nth-child(4) {
+    animation-delay: 0.21s;
+  }
+  .stagger > *:nth-child(5) {
+    animation-delay: 0.27s;
+  }
+  .stagger > *:nth-child(6) {
+    animation-delay: 0.33s;
+  }
+  .pulso-avatar {
+    animation: pulso-avatar 3.2s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .stagger > *,
+    .pulso-avatar,
+    .gira-lento {
+      animation: none;
+    }
+  }
+  /* Corporeidad: relieve sutil para que las cajas no se vean planas */
+  .relieve {
+    box-shadow:
+      0 1px 2px rgba(26, 24, 21, 0.04),
+      0 4px 14px rgba(26, 24, 21, 0.06);
+  }
+  .relieve-panel {
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.25),
+      0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  .relieve-cta {
+    box-shadow: 0 2px 10px rgba(232, 134, 27, 0.35);
+  }
+}
+
+@layer base {
+  :root {
+    /* Medidas de la barra de navegación flotante (coordinan nav + composer del chat) */
+    --nav-alto: 76px; /* alto del pill: py-3 (24) + FAB (52) */
+    --nav-margen: max(12px, calc(env(safe-area-inset-bottom) - 16px)); /* separación del borde inferior */
+    --composer-gap: 12px; /* aire entre el composer y la nav */
+  }
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button,
+  a,
+  input[type='checkbox'] + span {
+    transition:
+      transform 0.12s ease,
+      opacity 0.15s ease,
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease,
+      box-shadow 0.2s ease,
+      filter 0.12s ease;
+  }
+  button:active,
+  a:active {
+    transform: scale(0.95);
+    filter: brightness(0.92);
+  }
+}
+
+/* Slider continuo (rasgos de personalidad): una línea que se arrastra, en vez de
+   barras segmentadas que confundían. El relleno lo pinta el gradiente inline. */
+.tg-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+}
+.tg-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #fff;
+  border: 2.5px solid #6c78ee;
+  box-shadow: 0 2px 8px rgba(108, 120, 238, 0.35);
+  cursor: grab;
+}
+.tg-slider::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.08);
+}
+.tg-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #fff;
+  border: 2.5px solid #6c78ee;
+  box-shadow: 0 2px 8px rgba(108, 120, 238, 0.35);
+  cursor: grab;
+}
+
+/* Vidrio tipo iOS 26 (Liquid Glass) aproximado con CSS: translúcido + blur fuerte
+   + saturación + un brillo sutil en el borde superior (el "rim" del vidrio). El
+   Liquid Glass nativo es solo para vistas nativas; esto es lo más cerca en WebView. */
+.glass-ios {
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 8px 30px rgba(50, 50, 90, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+/* Hoja del mes para imprimir: solo se imprime la tabla, sin la app alrededor
+   (barra de chat, menú, títulos fijos). El truco de visibility es el que mejor
+   aguanta los elementos position:fixed. */
+@media print {
+  @page {
+    size: landscape;
+    margin: 10mm;
+  }
+  body * {
+    visibility: hidden;
+  }
+  .hoja-imprimible,
+  .hoja-imprimible * {
+    visibility: visible;
+  }
+  .hoja-imprimible {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: none;
+    padding: 0;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Pie difuminado: el contenido se desvanece antes de llegar a la barra de chat,
+   en vez de verse a medias a través del vidrio y asomar por debajo del composer
+   (en el iPhone la franja del safe-area dejaba ver texto ahí). Usa el mismo
+   .fondo-app, que va con background-attachment: fixed, así calza exacto con el
+   fondo de la página en cualquier scroll. */
+.pie-difuminado {
+  /* El desvanecido queda transparente detrás de la mini-nav (para que se vea su
+     efecto de vidrio con el contenido difuminado atrás) y se vuelve sólido recién
+     abajo de todo, a la altura real del composer.
+     Antes empezaba a taparse a los 105px y era sólido a los 150: el texto se
+     cortaba mucho antes de llegar a la barra de escritura y no se podía terminar
+     de leer el último mensaje. Ahora la transición arranca más abajo y es más
+     larga, así el texto se sigue viendo mientras baja.
+
+     Y nunca llega a opaco del todo (0.85): si esta capa fuera sólida detrás del
+     composer, el vidrio del composer no tendría nada que mostrar y el efecto no
+     se vería. Los dos se anulaban: por eso la barra "no se volvió vidrio"
+     aunque el CSS estaba aplicado. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 150px, rgba(0, 0, 0, 0.85) 190px);
+  mask-image: linear-gradient(to bottom, transparent 0, transparent 150px, rgba(0, 0, 0, 0.85) 190px);
+}
+
+/* Noticia (Descubrir). Antes la foto se estiraba para llenar una tarjeta de alto
+   fijo: se agrandaba, se pixelaba, y el panel de vidrio encima dejaba un corte
+   con sombra rara arriba. Ahora la foto entra con SU proporción real y el resto
+   de la tarjeta es negro: el borde de abajo de la foto se funde en ese negro y
+   el texto vive sobre el negro, no sobre la imagen. Sin recorte, sin estirar,
+   sin línea de corte. */
+.noti-card { background: #0e0e18; }
+.noti-fundido::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px;
+  /* nunca más de la mitad de la foto, para no taparla cuando es bajita */
+  height: min(72px, 50%);
+  background: linear-gradient(to top, #0e0e18 0%, rgba(14, 14, 24, 0.86) 42%, rgba(14, 14, 24, 0) 100%);
+  pointer-events: none;
+}
+
+/* La barra de escribir, en vidrio de verdad: antes era blanco al 95% con blur,
+   o sea prácticamente opaca, y el efecto no se veía. Ahora deja pasar el
+   contenido que va quedando atrás mientras scrolleás, como el resto de las
+   superficies flotantes de la app (la nav, el botón del menú). */
+.glass-composer {
+  background: rgba(255, 255, 255, 0.62);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow:
+    0 10px 30px rgba(80, 70, 150, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+/* Los botones de foto y micrófono, en vidrio también. Antes eran un chip lila
+   plano (rgba iris .1) apoyado sobre una barra de vidrio: el material no
+   coincidía y se notaba.
+   Acá lo que vende el vidrio NO es el blur — adentro de un padre que ya tiene
+   backdrop-filter el blur casi no suma — sino el rim: la línea blanca de
+   arriba y el aro interno. El tinte iris queda apenas, para que el ícono se
+   siga leyendo. */
+.glass-boton {
+  background: rgba(108, 120, 238, 0.1);
+  -webkit-backdrop-filter: blur(10px) saturate(170%);
+  backdrop-filter: blur(10px) saturate(170%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+    0 1px 3px rgba(50, 50, 90, 0.1);
+}
+.glass-boton:active {
+  background: rgba(108, 120, 238, 0.18);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-boton {
+    background: rgba(108, 120, 238, 0.14);
+  }
+}
+/* Sin soporte de backdrop-filter, opaco: mejor sólido que ilegible. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-composer {
+    background: rgba(255, 255, 255, 0.97);
+  }
+}
+
+/* Composer "pensando": un resplandor iris alrededor de la barra de escritura,
+   para que el estado se vea ahí y no perdido abajo. Respeta reduced-motion. */
+@keyframes composer-glow {
+  0%, 100% { box-shadow: 0 0 0 1px var(--color-iris-borde), 0 10px 30px rgba(80, 70, 150, 0.18); }
+  50% { box-shadow: 0 0 0 1.5px rgba(108, 120, 238, 0.55), 0 10px 30px rgba(80, 70, 150, 0.22), 0 0 22px 3px rgba(108, 120, 238, 0.35); }
+}
+.composer-glow { animation: composer-glow 1.8s ease-in-out infinite; border-color: transparent !important; }
+@media (prefers-reduced-motion: reduce) { .composer-glow { animation: none; } }
+
+/* LA COLITA DE LAS BURBUJAS, SACADA (29/07). Se probaron dos geometrías
+   distintas para la gotita de abajo y ninguna convenció a Matías en la app de
+   verdad: *"sacale esas colitas, ahí se ven horribles"*. La burbuja queda
+   pareja en las cuatro esquinas y sin cola — el borde y el color ya alcanzan
+   para distinguir quién habló. */
+
+/* Los destellos de un anillo cerrado, TITILANDO (29/07, pedido de Matías).
+   Es lento y chico a propósito: un anillo cerrado es una felicitación, no una
+   notificación. Cada destello lleva su propio `animation-delay`, porque todos
+   latiendo al mismo tiempo se leen como un parpadeo de error.
+
+   ⚠️ La posición y el tamaño de cada destello van en un <g> que lo envuelve, NO
+   en el path: la propiedad CSS `transform` de esta animación LE GANA al atributo
+   `transform=` del SVG, así que si el path llevara su translate, el destello se
+   iría al centro del dibujo apenas arranca la animación.
+   `transform-box: fill-box` hace que escale sobre su propio centro y no sobre el
+   del viewBox. */
+@keyframes destello-titila {
+  0%, 100% { transform: scale(1); opacity: var(--op-destello, 0.8); }
+  50% { transform: scale(1.32); opacity: 1; }
+}
+.destello {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: destello-titila 2.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .destello { animation: none; opacity: var(--op-destello, 0.8); }
+}
+
+/* Presencia del asistente: la chispa respira despacio, para que se sienta viva
+   sin distraer. El ícono definitivo lo verá Matías más adelante; por ahora es
+   este latido tenue. Respeta prefers-reduced-motion. */
+@keyframes respira-chispa {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.07); }
+}
+.respira-chispa svg {
+  animation: respira-chispa 4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* EL ASISTENTE, VIVO (28/07, pedido de Matías: "los ojitos son estáticos, son
+   medio raros"). Dos animaciones, y ninguna toca la cabeza: probamos que el
+   círculo respirara y no le gustó, se lee como que la app late sola.
+     · los ojos PARPADEAN: 5% del ciclo cerrados, el resto abiertos. Es lo que
+       alcanza para que se sienta que hay alguien, sin pedir atención.
+     · las estrellas TITILAN desfasadas: la segunda arranca 0.9s después, si no
+       prenden y apagan juntas y parecen una luz de alarma.
+   Las dos son largas y suaves a propósito: esto está en pantalla mientras él
+   lee, y algo que se mueve rápido al lado de un texto no deja leer. */
+@keyframes pestanea-ia {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.08); }
+}
+@keyframes titila-ia {
+  0%, 100% { opacity: 0.45; transform: scale(0.82); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+/* ⚠️ `transform-box: fill-box` en los tres: sin eso, el origen de la transformada
+   es el del SVG entero y no el de cada figura, así que el parpadeo achata los
+   ojos contra el borde de arriba y las estrellas se van de viaje al escalar. */
+/* El mate flota. Ciclo de 3.4s, distinto del de los ojos y del de las estrellas
+   a propósito: si los tres laten en el mismo tiempo, el avatar entero pulsa y
+   se lee como una alarma en vez de como algo vivo. */
+@keyframes flota-mate {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3.5px); }
+}
+.flota-mate { animation: flota-mate 3.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .flota-mate { animation: none; } }
+
+/* ── EL COLOR QUE SE MUEVE ADENTRO DE LA CABEZA (07/08) ──────────────────────
+   Dos manchas borrosas que DERIVAN —se trasladan y cambian de tamaño—, no que
+   giran.
+
+   ⚠️ SE PROBARON LAS DOS Y GANÓ LA DERIVA: orbitar se lee mecánico, derivar se
+   lee líquido. Y son DOS manchas de dos colores (lila y turquesa), no una: con
+   una sola el interior parece un degradé que se mueve; con dos parece algo vivo.
+   Matías reclamó el turquesa apenas se perdió en una vuelta.
+
+   ⚠️ CICLOS DISTINTOS Y LARGOS (11 y 14s). Si fueran iguales el dibujo se
+   repetiría cada ciclo; si fueran cortos, el bot pasaría de "está vivo" a "está
+   cargando".
+
+   ⚠️ `transform-box: fill-box` es obligatorio, igual que en los ojos y las
+   estrellas: sin eso los porcentajes de `translate` se resuelven contra el SVG
+   entero y las manchas se van de viaje. */
+@keyframes deriva-ia-1 {
+  0%, 100% { transform: translate(-14%, -10%) scale(1); }
+  33% { transform: translate(16%, 6%) scale(1.18); }
+  66% { transform: translate(-2%, 16%) scale(0.92); }
+}
+@keyframes deriva-ia-2 {
+  0%, 100% { transform: translate(14%, 12%) scale(1.05); }
+  40% { transform: translate(-12%, -8%) scale(0.9); }
+  70% { transform: translate(6%, -14%) scale(1.14); }
+}
+.deriva-ia-1 { animation: deriva-ia-1 11s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.deriva-ia-2 { animation: deriva-ia-2 14s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+
+.pestanea-ia { animation: pestanea-ia 5.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.titila-ia { animation: titila-ia 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+/* ⚠️ ACÁ ESTABA `.titila-ia-2`, el desfasaje de 0,9s de la SEGUNDA estrella del
+   bot. Murió el 11/08 con la estrella (Matías pidió que quede una sola). El
+   desfasaje existía para que las dos no titilaran al mismo tiempo — con una, no
+   hay contra qué desfasar. */
+@media (prefers-reduced-motion: reduce) {
+  .pestanea-ia, .titila-ia, .deriva-ia-1, .deriva-ia-2 { animation: none; }
+}
+
+/* El Analista pensando: el ícono de Patrones en grande, destellando, mientras
+   busca conexiones. Es el "estoy trabajando" que pidió Matías, no un iconito. */
+@keyframes destello-patron {
+  0%, 100% { opacity: 0.45; transform: scale(0.96); }
+  50% { opacity: 1; transform: scale(1.06); filter: drop-shadow(0 0 12px rgba(108, 120, 238, 0.55)); }
+}
+.destello-patron { animation: destello-patron 1.5s ease-in-out infinite; transform-origin: center; }
+/* Barra de carga indeterminada: una franja que recorre de izquierda a derecha. */
+@keyframes barra-cargando {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+.barra-cargando::after {
+  content: ""; position: absolute; inset: 0; width: 33%;
+  background: linear-gradient(90deg, transparent, var(--color-iris), transparent);
+  animation: barra-cargando 1.3s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .destello-patron { animation: none; opacity: 0.9; }
+  .barra-cargando::after { animation: none; width: 100%; opacity: 0.5; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .respira-chispa svg { animation: none; }
+}
+
+/* Un día que forma parte de la racha viva: no es solo "hecho", está encendido.
+   El brillo es lo que premia SOSTENER, que era la idea de Matías — la racha da
+   el brillo, no el puntaje. Respeta reduced-motion. */
+@keyframes racha-latido {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(61, 155, 128, 0), 0 1px 5px rgba(61, 155, 128, 0.45); }
+  50% { box-shadow: 0 0 7px 1px rgba(61, 155, 128, 0.5), 0 1px 6px rgba(61, 155, 128, 0.55); }
+}
+.dia-racha {
+  animation: racha-latido 2.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dia-racha { animation: none; box-shadow: 0 0 6px 1px rgba(61, 155, 128, 0.45); }
+}
+
+/* Tarjeta de vidrio. El blanco plano sobre el lavanda de la app se ve pálido y
+   despegado — como un recorte apoyado encima. Con vidrio la tarjeta toma algo
+   del fondo y se integra, sin perder legibilidad: el 78% alcanza para que el
+   texto se lea y deja pasar lo justo. */
+.glass-tarjeta {
+  background: rgba(255, 255, 255, 0.78);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  box-shadow:
+    0 3px 14px rgba(50, 50, 90, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-tarjeta { background: #fff; }
+}
+
+/* Vidrio CON TINTE. El vidrio blanco puro no tenía personalidad (dicho de
+   Matías). Este mezcla el lila y el turquesa de la paleta en un degradado muy
+   suave: se nota que hay color sin que compite con el contenido.
+   El blanco al 74% de base es lo que garantiza que el texto se siga leyendo. */
+.glass-tinte {
+  background:
+    linear-gradient(140deg, oklch(0.72 0.13 195 / 0.1) 0%, transparent 45%),
+    linear-gradient(320deg, oklch(0.6 0.17 310 / 0.09) 0%, transparent 50%),
+    rgba(255, 255, 255, 0.74);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  /* Sombra más presente que en el resto de las tarjetas: es lo que le da
+     profundidad y hace que se despegue del lavanda en vez de quedar plana. */
+  box-shadow:
+    0 1px 2px rgba(50, 50, 90, 0.04),
+    0 8px 24px rgba(70, 60, 130, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-tinte { background: #fbfaff; }
+}
+
+/* El surco vacío del anillo, translúcido en vez de gris sólido: así también se
+   lee como vidrio y deja pasar el tinte de la tarjeta. */
+.pista-vidrio { stroke: rgba(108, 120, 238, 0.13); }
+
+/* Las pastillas de Cuerpo, con el mismo vidrio que el resto de la app (31/07,
+   Matías: "que se vea medio como vidrio, no se vean tan planas").
+   ⚠️ Acá va SOLO lo que no cambia entre pastillas: el desenfoque de atrás, el
+   brillo del borde de arriba y una sombra corta. El color de fondo lo pone cada
+   una inline, porque es el de su anillo — y por lo mismo, ninguna puede definir
+   `box-shadow` inline: le ganaría a esta y las volvería planas de nuevo.
+   Sombra corta y no la de las tarjetas: son seis apiladas con 6 px entre ellas,
+   y una sombra larga las embarraría en un solo bloque gris. */
+/* ⚠️ EL `backdrop-filter` NO HACE NADA ACÁ Y SE SACÓ. Estas pastillas van sobre
+   una tarjeta con fondo casi sólido: desenfocar lo de atrás no cambia un pixel.
+   La primera versión se apoyaba en eso y Matías no vio ninguna diferencia
+   (31/07: *"los anillos todavía no los veo de vidrio, no parece"*) — tenía razón,
+   se comparó el antes y el después renderizados y eran casi iguales.
+   Lo que SÍ lee como vidrio es el degradé fuerte (blanco arriba que se abre al
+   color abajo) más un rim blanco marcado arriba y uno tenue abajo, que es el
+   truco que hace ver curva una superficie plana. */
+.pastilla-vidrio {
+  box-shadow:
+    0 3px 10px rgba(50, 50, 90, 0.1),
+    inset 0 1.5px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Los chips de "Anotar rápido", con el mismo vidrio (31/07, pedido de Matías:
+   *"los chips también tenían bueno que sean de vidrio, o sea, más como
+   vidriado, el fondo"*).
+
+   ⚠️ MISMA RECETA QUE `pastilla-vidrio`, Y POR EL MISMO MOTIVO: nada de
+   `backdrop-filter`. Los chips van sobre el fondo liso del Home, así que
+   desenfocar lo de atrás no cambiaría un pixel — es exactamente el error que ya
+   se cometió con los anillos y que Matías marcó enseguida. Lo que lee como
+   vidrio es el degradé (blanco arriba que se abre al color abajo) más un rim
+   blanco marcado arriba y uno tenue abajo: el truco que hace ver curva una
+   superficie plana.
+
+   ⚠️ EL `box-shadow` VIVE ACÁ Y NINGÚN CHIP PUEDE PONER EL SUYO INLINE: le
+   ganaría a este y volvería a verse plano. El degradé sí va inline, porque el
+   color es el de cada chip. Es la misma división que en las pastillas.
+
+   La sombra es corta a propósito: es una fila que scrollea en horizontal con 8px
+   entre chips, y una sombra larga los uniría en una sola mancha gris.
+
+   ⚠️ ESTA SOMBRA NO SE VE SI LA FILA NO LE DA LUGAR. La fila de chips scrollea
+   con `overflow-x: auto`, y eso obliga a `overflow-y` a valer `auto` también:
+   recorta arriba y abajo. Sin padding vertical la sombra se corta justo en el
+   borde y el chip queda plano por más vidrio que tenga — fue lo que hizo que el
+   primer intento no se notara (31/07, Matías: *"se ve la sombra cortada"*). El
+   lugar lo pone `AsistenteEntrada` con `-my-2 py-2`; si algún día se saca, esto
+   deja de verse y no hay error que lo avise. */
+
+/* ── ⚠️⚠️ PAPEL: LO QUE SE TOCA (11/08) ─────────────────────────────────────
+   Idea de Matías: *"me gusta el estilo del vidrio que tenemos ahora, pero me
+   gustaría que en estos chips de 'hoy, de un toque' haya más como un efecto
+   papel"*.
+
+   ⚠️ **Y CIERRA LA DISTINCIÓN QUE ÉL MISMO EMPEZÓ ESTA MAÑANA.** Ya habíamos
+   separado por FORMA —pastilla abre, rectángulo se marca—; esto la separa
+   también por MATERIAL, y las dos dicen lo mismo:
+
+     · **vidrio** (`glass-tinte`, `chip-vidrio`) → la app te habla: el bot, las
+       tarjetas, lo que te trae.
+     · **papel** (esto) → lo que vos tocás y marcás.
+
+   Un material no es una decoración: **es la promesa de qué se puede hacer con
+   eso.** El vidrio se mira; el papel se escribe.
+
+   ── CÓMO SE HACE UN PAPEL, QUE NO ES "SACARLE EL BRILLO" ───────────────────
+
+   Lo que lee como papel son tres cosas juntas, y las tres importan:
+
+   1. ⚠️ **NADA DE RIM BLANCO ARRIBA.** Ese `inset 0 1.5px 0 #fff` es lo que hace
+      ver una superficie curva y pulida — es el truco central de `chip-vidrio` y
+      es justo lo que hay que sacar. Sin él, la superficie se aplana.
+   2. **Sombra corta, baja y sin blur largo.** Una hoja apoyada proyecta poco: el
+      vidrio flota (10px de blur), el papel se apoya (3px).
+   3. ⚠️ **Grano.** Sin textura, "sin brillo" se lee como *plano*, no como papel.
+      Es una turbulencia SVG muy suave, al 3,5%: no se ve como ruido, se siente
+      como fibra. **Es lo que separa "papel" de "botón mate".**
+
+   ⚠️ EL GRANO VA COMO `data:` INLINE y no como archivo: son ~200 bytes y evita
+   un pedido de red por un textura que aparece en la primera pantalla.
+   `background-repeat` lo tilea, así que 80px alcanzan para cualquier ancho. */
+/* El grano, en una variable: lo usan los chips y la tarjeta de "Tu semana", y
+   son el MISMO material — dos texturas distintas para lo mismo sería justo lo
+   que el kit viene evitando.
+   ⚠️ 20% y frecuencia 0,65 (11/08). Nació en 3,5% con 0,9 y **no se veía**:
+   Matías lo dijo dos veces. Dos cosas estaban mal, no una:
+     · la opacidad, obvio;
+     · y la FRECUENCIA. A 0,9 el ruido es finísimo y se lee como suciedad de
+       pantalla; más grueso se lee como fibra. **"Papel" no es "más opaco": es
+       otro tamaño de grano.**
+   Él eligió 20 mirando 6, 14 y 24 al lado. */
+:root {
+  --grano: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)' opacity='0.2'/%3E%3C/svg%3E");
+}
+
+.chip-papel {
+  background-image: var(--grano);
+  box-shadow:
+    0 1px 2px rgba(50, 50, 90, 0.07),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+/* La misma fibra, para una tarjeta entera. No trae sombra ni borde propios: los
+   pone quien la use, porque una tarjeta ya tiene los suyos. */
+.papel {
+  background-image: var(--grano);
+}
+/* ⚠️ El grano se apaga en alto contraste: es textura decorativa, y sobre un
+   fondo forzado puede leerse como suciedad. */
+@media (prefers-contrast: more) {
+  .chip-papel, .papel { background-image: none; }
+}
+
+.chip-vidrio {
+  box-shadow:
+    0 3px 10px rgba(50, 50, 90, 0.1),
+    inset 0 1.5px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.45);
+}
+
+
+/* ── EL MENÚ EMPUJA LA PANTALLA (27/07, pedido de Matías: "como Claude") ─────
+   Antes el panel se deslizaba ENCIMA del contenido con una cortina oscura.
+   Ahora el contenido se corre a la derecha y el panel aparece abajo, en el
+   hueco: se entiende que la app no se fue a ningún lado, solo se hizo a un lado.
+
+   ⚠️ Se usa la propiedad `translate` y NO `transform`, y es a propósito:
+   `transform` ya lo usa la barra de abajo para esquivar el teclado, y son dos
+   movimientos independientes. Con `translate` cada uno maneja el suyo sin
+   pisarse.
+   ⚠️ Y se aplica a los elementos que se mueven, NUNCA a un ancestro: un
+   ancestro con transform/translate se convierte en el contenedor de sus hijos
+   `position: fixed` y la barra de abajo dejaría de estar fija (lección del
+   27/07 con la hoja de registro). */
+.desplaza-menu {
+  transition: translate 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+:root[data-menu='abierto'] .desplaza-menu {
+  translate: var(--menu-ancho) 0;
+}
+/* ⚠️ AL NAVEGAR DESDE EL MENÚ, EL CONTENIDO VUELVE DE GOLPE Y NO DESLIZÁNDOSE
+   (02/08, Matías mandó la captura: la pantalla nueva ya dibujada, corrida a la
+   derecha, con la anterior asomando por el borde y el panel todavía puesto).
+
+   La causa son DOS animaciones peleando por la misma pantalla: al tocar un
+   destino, el contenido empieza su viaje de 300ms de vuelta a su lugar mientras
+   la pantalla nueva entra con su propio `flotar` de 300ms. Durante ese cruce se
+   ve el contenido VIEJO deslizándose con el NUEVO encima.
+
+   Deslizar de vuelta solo tiene sentido cuando cerrás el menú y te quedás donde
+   estabas: ahí el movimiento cuenta que la app se hizo a un lado y volvió. Si te
+   vas a otra pantalla, ese contenido ya no existe y animarlo es animar un
+   fantasma. Con la transición apagada, el único movimiento es el de la pantalla
+   que llega, que es lo que la persona fue a buscar. */
+:root[data-menu-salto] .desplaza-menu {
+  transition: none;
+}
+
+/* ⚠️ MIENTRAS SE DESLIZA, EL FONDO SE APLANA. Si no, se ven costuras rectangulares
+   (02/08, Matías mandó la captura: *"se ve entrecortado, como recuadrado, por
+   partes rectangulares, como que uno se come a otro"*).
+
+   La causa es la misma familia que la de `.flotar`, y conviene tenerla junta:
+   **`background-attachment: fixed` NO funciona dentro de un elemento con
+   transform.** Un ancestro transformado hace que el fondo se comporte como
+   `scroll` y se ancle AL ELEMENTO en vez de al viewport.
+
+   `main` lleva `.desplaza-menu` y `.fondo-app` a la vez. Con el menú cerrado su
+   degradé calza exacto con el del contenedor de afuera —de eso se trata el
+   `fixed`—, pero apenas empieza a moverse se re-ancla a su propia caja: las auras
+   saltan a otra posición y en el borde de `main` aparece un escalón recto contra
+   el fondo de atrás. Eso es el recuadro de la captura.
+
+   La salida es sacarle el degradé al que se mueve, no al de atrás: el lavanda
+   plano es opaco, así que sigue tapando el panel (que es para lo que estaba), y
+   las auras las pone el contenedor de afuera, que no se mueve nunca. Al cerrar,
+   el degradé vuelve.
+
+   ⚠️ NO SE PUEDE SACAR EL FONDO DEL TODO: `main` está en z-30 y el panel en
+   z-20. Sin fondo opaco, el menú se vería a través del contenido. */
+:root[data-menu='abierto'] .desplaza-menu.fondo-app,
+:root[data-menu-salto] .desplaza-menu.fondo-app {
+  background: var(--color-lavanda);
+}
+@media (prefers-reduced-motion: reduce) {
+  .desplaza-menu {
+    transition: none;
+  }
+}
+
+/* ── EL LATIDO DE LA LLAMA DE LA RACHA (05/08) ──────────────────────────────
+   Pedido de Matías: *"mejor relleno y, si es animado, mejor"*.
+
+   ⚠️ ES UN LATIDO, NO UN BAILE. Escala entre 1 y 1.08 y cambia apenas el brillo:
+   a 14px, cualquier cosa más grande se lee como un parpadeo de error. Lo que
+   tiene que decir es "esto está vivo", no "mirame".
+
+   ⚠️ Y `transform-origin: bottom` — no `center`. Una llama crece desde su base,
+   como el fuego; escalándola desde el medio se ve como si respirara todo el
+   dibujo, que es exactamente lo que la hace parecer un globo y no una llama.
+
+   ⚠️ Se apaga con `prefers-reduced-motion`. Una animación infinita sin escape es
+   una barrera de accesibilidad, no un detalle: hay gente a la que el movimiento
+   repetido le da náuseas o le dispara migraña. */
+@keyframes latido-llama {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.88; }
+}
+.latido-llama {
+  animation: latido-llama 2.2s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .latido-llama { animation: none; }
+}
+
+/* ── DONDE SE ESCRIBE NO HAY CAJA (06/08) ───────────────────────────────────
+   Matías: *"no quiero que las cajas donde se escribe tengan ni fondo ni borde"*,
+   y en particular el recuadro lila que aparecía justo al escribir.
+
+   ⚠️ EL LILA NO ERA EL FOCO DEL NAVEGADOR. `:focus-visible` (más arriba) es solo
+   teclado y en el teléfono no se dibuja nunca. Lo que se veía era el
+   `focus:border-iris` que cada campo traía escrito en su className: 72 campos en
+   40 archivos, todos con `border ... bg-white` y el borde pasando a iris macizo
+   al enfocar.
+
+   ⚠️ VA ACÁ Y NO EN LOS 72 LUGARES, y no es por vagancia: son 72 oportunidades
+   de que uno quede distinto, y la próxima pantalla nace con el borde de nuevo
+   porque se copia de una vieja. Es la misma regla que `glifos.tsx` para los
+   dibujos — un concepto, un lugar. Acá el concepto es "campo de texto".
+
+   ⚠️ SIN `@layer` A PROPÓSITO. En Tailwind v4 las utilidades viven en
+   `@layer utilities`, y en la cascada **lo que no está en ninguna capa le gana a
+   lo que sí**, sin importar la especificidad. Por eso esto pisa a `bg-white` y a
+   `focus:border-iris` sin un solo `!important` y sin tocar ningún className.
+
+   ⚠️ `border-color: transparent` Y NO `border: none`: el borde sigue midiendo
+   1px, solo que no se ve. Sacarle el ancho movería 2px de layout en 72 campos a
+   la vez — el texto saltaría de lugar en media app por un cambio que era de
+   color. Lo que se apaga es el dibujo, no el espacio.
+
+   Quedan afuera los que no son "cajas donde se escribe": casilleros, radios,
+   sliders, el selector de archivo y el de color, que SON su propio dibujo. */
+input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='color']),
+textarea {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+/* ⚠️ Y TAMPOCO EL ANILLO DE FOCO EN LOS CAMPOS (06/08). Matías, viéndolo al
+   escribir: *"no quiero que se vea la línea lila, en ningún lado, en todos los
+   campos de relleno"*.
+
+   ⚠️ ERA `:focus-visible`, aunque más arriba diga que eso es "solo teclado". Lo
+   es para un botón o un link — pero **un campo de texto matchea `:focus-visible`
+   SIEMPRE que está enfocado**, con el dedo también: la spec lo pide así porque
+   un campo que acepta escritura tiene que decir dónde va a caer lo que tipeás.
+   De ahí que el anillo apareciera justo al empezar a escribir y en ningún otro
+   momento.
+
+   ⚠️ SE SACA SOLO EN LOS CAMPOS, NO EN TODA LA APP, y eso no es una concesión a
+   medias: en un campo enfocado **el cursor titilando ya es el indicador de
+   foco**, y es mejor que el anillo porque además dice en qué letra estás. En un
+   botón no hay cursor, así que ahí el anillo se queda — sacarlo dejaría a
+   cualquiera que navegue con tab sin saber dónde está parado. */
+input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='color']):focus-visible,
+textarea:focus-visible {
+  outline: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LA ESCALA DE ESPACIOS (07/08)
+
+   Matías: *"hay muchos errores de espacio acá, hay que estandarizarlo para que
+   esté en el UX kit y, cuando crees nuevas cosas, ya esté estandarizado"*.
+
+   ⚠️⚠️ EL PROBLEMA NO ERA QUE LOS ESPACIOS FUERAN CHICOS, ERA QUE CADA UNO
+   ELEGÍA EL SUYO. En la pantalla de objetivos convivían `mt-1`, `mt-1.5`,
+   `mt-2.5`, `mt-3`, `mt-[13px]`, `mb-[11px]` y `mt-6`, todos escritos a ojo en
+   momentos distintos. Ninguno estaba mal solo; juntos no formaban ningún ritmo,
+   y por eso "una tarjeta queda llena y otra vacía".
+
+   Cinco pasos, y ninguno más. Si hace falta un sexto, casi siempre es que dos
+   cosas que van juntas están separadas como si fueran distintas.
+
+   ⚠️ LA REGLA DE ADENTRO DE UNA TARJETA: el título va PEGADO a lo suyo (--sp-2)
+   y los bloques distintos se separan con --sp-4. Arriba más cerca, abajo más
+   aire — pedido textual suyo, y además es como se lee: lo que pertenece al
+   título tiene que verse colgando de él.
+   ═══════════════════════════════════════════════════════════════════════════ */
+:root {
+  --sp-1: 4px; /* dentro de una línea: un ícono y su palabra */
+  --sp-2: 8px; /* entre cosas que son la misma idea: título y su etiqueta */
+  --sp-3: 12px; /* entre bloques de una tarjeta */
+  --sp-4: 16px; /* entre bloques que no se parecen: texto y gráfico */
+  --sp-5: 24px; /* entre tarjetas, y entre una lista y la siguiente */
+  --sp-6: 32px; /* entre secciones de una pantalla */
+
+  /* ── LOS TRES REDONDEOS (07/08, segunda vuelta del kit) ───────────────────
+     Pedido de Matías: *"toda la app tiene fallos, espacios mal resueltos… hay
+     que generar una estandarización"*.
+
+     ⚠️⚠️ MEDIDO ANTES DE INVENTAR NADA: 335 tarjetas en `src/` con **17 radios
+     distintos**. Pero mirándolas de cerca **no son 17 versiones de lo mismo**:
+     son TRES familias, y cada una se dispersó por su cuenta porque ninguna
+     tenía nombre.
+
+       · lo que es una TARJETA  → 18 (79 veces), 16 (39) y 14 (39)
+       · lo que es un CONTROL   → 12 (72), 10 (29), 11 (16), 13 (7)
+       · lo que es una MARCA    → 8 (13), 6 (9), 9 (7), 4 (14)
+
+     O sea que el error no era elegir mal el número: era que **la misma clase de
+     cosa se dibujaba con tres radios según el día**. Con nombre, la pregunta
+     deja de ser "¿cuánto redondeo?" y pasa a ser "¿qué es esto?", que es una
+     pregunta que tiene UNA respuesta.
+
+     ⚠️ TRES Y NINGUNO MÁS, por el mismo motivo que la escala tiene cinco pasos:
+     un cuarto radio significa casi siempre que hay una cuarta familia sin
+     nombrar, y lo que hay que hacer es nombrarla, no agregar un número. */
+  --r-tarjeta: 18px; /* una tarjeta: la caja que agrupa un tema */
+  --r-control: 12px; /* input, botón rectangular, renglón de una lista */
+  --r-marca: 8px; /* el cuadradito de un ícono, un tilde, un chip cuadrado */
+}
+
+/* Una tarjeta, siempre igual: mismo redondeo, mismo padding, mismo aire abajo.
+   ⚠️ El padding de arriba es MENOR que el de abajo (14 vs 18): el contenido de
+   una tarjeta cuelga del borde de arriba y se apoya en el de abajo, así que el
+   mismo número en los dos lados se ve descolgado. */
+.tarjeta {
+  border-radius: var(--r-tarjeta);
+  padding: 14px 15px 18px;
+}
+
+/* Una pila de tarjetas: el espacio lo pone la pila, no cada tarjeta.
+   ⚠️ ASÍ NO PUEDE PASAR LO QUE PASABA: cada tarjeta traía su propio `mb-*`, y
+   la última de una lista dejaba un margen que la siguiente sección volvía a
+   sumar. El hueco entre dos tarjetas y el hueco antes de "Cerrados" ahora salen
+   del mismo lugar y son, por definición, iguales. */
+.pila > * + * {
+  margin-top: var(--sp-5);
+}
+
+/* ── ⚠️⚠️ DOS COSAS QUE SON LA MISMA IDEA NO SE SEPARAN COMO DOS TARJETAS ────
+   Lo encontró Matías mirando la app (07/08): *"en objetivos, los botones para
+   crear objetivos están como demasiado separados uno del otro"*.
+
+   Y tenía razón, con una causa exacta: los dos botones de alta son hijos
+   directos de `.pila`, así que se llevaban los **24px de `--sp-5`** — el mismo
+   hueco que hay entre dos objetivos distintos. Pero esos dos botones no son dos
+   temas: son **dos maneras de hacer lo mismo** (uno arranca de la rueda, el otro
+   no). Separados como si fueran temas distintos, se leen como dos secciones.
+
+   ⚠️ EL AGUJERO ERA DEL KIT, NO DE ESA PANTALLA. `.pila` tenía UNA sola medida y
+   ninguna forma de decir "estas dos van juntas", así que **cualquier pantalla
+   que agrupara dos cosas parecidas iba a tener el mismo problema**. Esto no
+   arregla objetivos: arregla la regla, y objetivos deja de estar roto de paso.
+
+   Se envuelven en un `.grupo` y adentro se separan con `--sp-2`, que es
+   literalmente lo que la escala ya decía que había que usar *"entre cosas que
+   son la misma idea"*. El grupo entero sigue siendo un hijo de la pila, así que
+   contra lo de afuera conserva sus 24px. */
+.grupo > * + * {
+  margin-top: var(--sp-2);
+}
+
+/* ── EL BAMBOLEO DEL BOT MAREADO (18/08) ─────────────────────────────────────
+   Va con las espirales de `AvatarIA`. Es un giro chico —2.5 grados— y no un
+   sacudón: el bot se marea, no se cae.
+   ⚠️ `prefers-reduced-motion` lo apaga y quedan solo las espirales, que ya
+   cuentan el chiste sin mover nada. Es la misma regla que el latido de la
+   llama. */
+@keyframes marea-ia {
+  0%, 100% { rotate: -2.5deg; }
+  50% { rotate: 2.5deg; }
+}
+.marea-ia {
+  animation: marea-ia 0.42s ease-in-out infinite;
+}
+
+/* ── EL TEMBLOR AL TOCARLO (18/08) ───────────────────────────────────────────
+   Matías: *"estaría bueno que se agrande y se achique cuando lo vas tocando,
+   como que tiembla"*. Un rebote corto: se achata, se pasa de largo y vuelve.
+
+   ⚠️⚠️ USA `scale` Y `rotate` COMO PROPIEDADES SUELTAS, NO `transform`. Las dos
+   animaciones corren sobre el MISMO elemento —el temblor siempre, el bamboleo
+   solo si está mareado— y con `transform` la segunda le pisaría la primera:
+   ganaría una sola. Como propiedades independientes se componen, así que el bot
+   mareado tiembla Y se bambolea.
+
+   ⚠️ `both` no: cuando termina tiene que volver a su escala natural. Acá el
+   fill-mode por defecto es justo lo que hace falta (y es lo contrario del caso
+   del `stagger`, donde `both` dejaba una matriz pegada). */
+@keyframes late-ia {
+  0% { scale: 1; }
+  35% { scale: 0.88; }
+  70% { scale: 1.07; }
+  100% { scale: 1; }
+}
+.late-ia {
+  animation: late-ia 0.34s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ⚠️ Las dos se apagan con `prefers-reduced-motion`, igual que el latido de la
+   llama. Las caras siguen cambiando: lo que se apaga es el movimiento, no la
+   respuesta al toque. */
+@media (prefers-reduced-motion: reduce) {
+  .marea-ia,
+  .late-ia { animation: none; }
+}

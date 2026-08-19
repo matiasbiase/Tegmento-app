@@ -1,0 +1,15 @@
+# SearXNG para la estimación de Objetivos (ver src/lib/buscar.ts).
+#
+# ⚠️ 'json' en formats NO es opcional: viene deshabilitado de fábrica y sin él
+# /search?format=json devuelve 403. Es el único motivo por el que existe este
+# archivo en vez de usar la imagen tal cual.
+use_default_settings: true
+server:
+  secret_key: "PONER-UNO-CON-openssl-rand-hex-16"
+  # Sin limiter: el único cliente es el worker de esta máquina, y con el limiter
+  # prendido el bot-detection le corta las consultas a la propia app.
+  limiter: false
+search:
+  formats:
+    - html
+    - json

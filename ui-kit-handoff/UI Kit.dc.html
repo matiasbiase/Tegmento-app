@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+<style>
+  * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+  @keyframes flotar { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes aparecer { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes latido { 0%,100% { opacity: .25; transform: scale(.9); } 50% { opacity: 1; transform: scale(1.1); } }
+  @keyframes resplandor { 0%,100% { box-shadow: 0 0 0 0 rgba(108,120,238,.0); } 50% { box-shadow: 0 0 22px 3px rgba(108,120,238,.45); } }
+  .uikit-btn:active { transform: scale(.95); filter: brightness(.92); }
+  ::-webkit-scrollbar { width: 10px; height: 10px; } ::-webkit-scrollbar-thumb { background: #c4c4d4; border-radius: 8px; }
+</style>
+</helmet>
+
+<div style="min-height: 100vh; width: 100%; background: #e3e3f1; font-family: 'Geist', system-ui, sans-serif; color: #1c1c2b; padding: 56px 40px 80px;">
+  <div style="max-width: 1180px; margin: 0 auto;">
+
+    <!-- ===== ENCABEZADO ===== -->
+    <header style="margin-bottom: 40px;">
+      <p style="margin: 0 0 10px; font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 2.5px; color: #6c78ee;">SISTEMA DE DISEÑO · v1</p>
+      <h1 style="margin: 0 0 12px; font-family: 'Newsreader', Georgia, serif; font-size: 58px; font-weight: 600; letter-spacing: -1px; line-height: 1;">Bitácora de Vida — UI&nbsp;Kit</h1>
+      <p style="margin: 0; max-width: 620px; font-size: 16px; line-height: 1.55; color: #56566c; text-wrap: pretty;">La referencia única de la interfaz. Anchos, redondeos, alturas, tamaños de caja, colores y animaciones — todo estandarizado y tokenizado. Regla de oro: <strong style="color:#1c1c2b;">si un valor no está acá, no se usa.</strong></p>
+    </header>
+
+    <!-- ===== COLORES ===== -->
+    <sc-if value="{{ show.colores }}" hint-placeholder-val="{{ true }}">
+    <section style="background: #fff; border-radius: 18px; padding: 32px; margin-bottom: 26px; box-shadow: 0 1px 2px rgba(26,24,21,.04), 0 6px 22px rgba(40,40,80,.06);">
+      <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 22px;">
+        <span style="font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; color: #9999ad;">01</span>
+        <h2 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: 30px; font-weight: 600;">Color</h2>
+      </div>
+
+      <p style="margin: 0 0 12px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: #9999ad;">FONDOS &amp; SUPERFICIE</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; margin-bottom: 28px;">
+        <sc-for list="{{ fondos }}" as="c" hint-placeholder-count="3">
+          <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e4e1d9;">
+            <div style="{{ c.swatch }}"></div>
+            <div style="padding: 11px 12px;">
+              <p style="margin: 0 0 3px; font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 600; color: #1c1c2b;">{{ c.hex }}</p>
+              <p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; color: #8a7cf0;">{{ c.tok }}</p>
+              <sc-if value="{{ anot }}" hint-placeholder-val="{{ true }}"><p style="margin: 6px 0 0; font-size: 12px; color: #9999ad;">{{ c.uso }}</p></sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <p style="margin: 0 0 12px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: #9999ad;">TEXTO</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; margin-bottom: 28px;">
+        <sc-for list="{{ textos }}" as="c" hint-placeholder-count="5">
+          <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e4e1d9;">
+            <div style="{{ c.swatch }}"></div>
+            <div style="padding: 11px 12px;">
+              <p style="margin: 0 0 3px; font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 600; color: #1c1c2b;">{{ c.hex }}</p>
+              <p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; color: #8a7cf0;">{{ c.tok }}</p>
+              <sc-if value="{{ anot }}" hint-placeholder-val="{{ true }}"><p style="margin: 6px 0 0; font-size: 12px; color: #9999ad;">{{ c.uso }}</p></sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <p style="margin: 0 0 12px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: #9999ad;">ACENTO PRINCIPAL · IRIS</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; margin-bottom: 20px;">
+        <sc-for list="{{ iris }}" as="c" hint-placeholder-count="4">
+          <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e4e1d9;">
+            <div style="{{ c.swatch }}"></div>
+            <div style="padding: 11px 12px;">
+              <p style="margin: 0 0 3px; font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 600; color: #1c1c2b;">{{ c.hex }}</p>
+              <p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; color: #8a7cf0;">{{ c.tok }}</p>
+              <sc-if value="{{ anot }}" hint-placeholder-val="{{ true }}"><p style="margin: 6px 0 0; font-size: 12px; color: #9999ad;">{{ c.uso }}</p></sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 12px; background: #f3f3fb; margin-bottom: 28px;">
+        <div style="width: 120px; height: 44px; border-radius: 10px; background: linear-gradient(135deg,#6c78ee,#8a7cf0); flex: none;"></div>
+        <div>
+          <p style="margin: 0 0 2px; font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 600;">linear-gradient(135deg, #6c78ee, #8a7cf0)</p>
+          <p style="margin: 0; font-size: 12px; color: #9999ad;">Gradiente de marca — avatares, botón de chat, CTA principal.</p>
+        </div>
+      </div>
+
+      <p style="margin: 0 0 12px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: #9999ad;">ACENTOS SEMÁNTICOS — color sólido + tinte de fondo</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px;">
+        <sc-for list="{{ semanticos }}" as="c" hint-placeholder-count="4">
+          <div style="border-radius: 12px; overflow: hidden; border: 1px solid #e4e1d9;">
+            <div style="display: flex; height: 64px;">
+              <div style="{{ c.solid }}"></div>
+              <div style="{{ c.tintSw }}"></div>
+            </div>
+            <div style="padding: 11px 12px;">
+              <p style="margin: 0 0 3px; font-size: 13px; font-weight: 700; color: #1c1c2b;">{{ c.nombre }}</p>
+              <p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; color: #56566c;">{{ c.par }}</p>
+              <sc-if value="{{ anot }}" hint-placeholder-val="{{ true }}"><p style="margin: 6px 0 0; font-size: 12px; color: #9999ad;">{{ c.uso }}</p></sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+    </sc-if>
+
+    <!-- ===== TIPOGRAFÍA ===== -->
+    <sc-if value="{{ show.tipo }}" hint-placeholder-val="{{ true }}">
+    <section style="background: #fff; border-radius: 18px; padding: 32px; margin-bottom: 26px; box-shadow: 0 1px 2px rgba(26,24,21,.04), 0 6px 22px rgba(40,40,80,.06);">
+      <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px;">
+        <span style="font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; color: #9999ad;">02</span>
+        <h2 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: 30px; font-weight: 600;">Tipografía</h2>
+      </div>
+      <p style="margin: 0 0 24px; font-size: 14px; color: #56566c;">Dos familias: <strong>Newsreader</strong> (serif) sólo para títulos grandes de pantalla; <strong>Geist</strong> para todo lo demás; <strong>Geist Mono</strong> para labels y metadata.</p>
+
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <sc-for list="{{ tipos }}" as="t" hint-placeholder-count="6">
+          <div style="display: flex; align-items: baseline; gap: 24px; padding: 16px 0; border-top: 1px solid #f1eff4;">
+            <div style="width: 230px; flex: none;">
+              <p style="margin: 0 0 4px; font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 600; color: #6c78ee;">{{ t.nivel }}</p>
+              <sc-if value="{{ anot }}" hint-placeholder-val="{{ true }}"><p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; color: #9999ad;">{{ t.spec }}</p></sc-if>
+            </div>
+            <p style="margin: 0; {{ t.sample }}">{{ t.txt }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+    </sc-if>
+
+    <!-- ===== MEDIDAS (radios, espaciado, tamaños, sombras) ===== -->
+    <sc-if value="{{ show.medidas }}" hint-placeholder-val="{{ true }}">
+    <section style="background: #fff; border-radius: 18px; padding: 32px; margin-bottom: 26px; box-shadow: 0 1px 2px rgba(26,24,21,.04), 0 6px 22px rgba(40,40,80,.06);">
+      <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 22px;">
+        <span style="font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; color: #9999ad;">03</span>
+        <h2 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: 30px; font-weight: 600;">Medidas</h2>
+      </div>
+
+      <p style="margin: 0 0 12px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: #9999ad;">REDONDEOS — escala de 6 pasos</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; margin-bottom: 30px;">
+        <sc-for list="{{ radios }}" as="r" hint-placeholder-count="6">
+          <div style="border: 1px solid #e4e1d9; border-radius: 12px; padding: 14px; text-align: center;">
+            <div style="{{ r.demo }}"></div>
+            <p style="margin: 12px 0 2px; font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 600;">{{ r.px }}</p>
+            <p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; color: #8a7cf0;">{{ r.label }}</p>
+            <sc-if value="{{ anot }}" hint-placeholder-val="{{ true }}"><p style="margin: 5px 0 0; font-size: 11px; color: #9999ad;">{{ r.uso }}</p></sc-if>
+          </div>
+        </sc-for>
+      </div>
+
+      <p style="margin: 0 0 12px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: #9999ad;">ESPACIADO — grilla base 8 (padding de pantalla = 22)</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-bottom: 30px;">
+        <sc-for list="{{ espacios }}" as="s" hint-placeholder-count="6">
+          <div style="text-align: center;">
+            <div style="{{ s.demo }}"></div>
+            <p style="margin: 8px 0 0; font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 600;">{{ s.px }}</p>
+            <sc-if value="{{ anot }}" hint-placeholder-val="{{ true }}"><p style="margin: 2px 0 0; font-size: 11px; color: #9999ad;">{{ s.uso }}</p></sc-if>
+          </div>
+        </sc-for>
+      </div>
+
+      <p style="margin: 0 0 12px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: #9999ad;">TAMAÑOS DE CAJA — estándar</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; margin-bottom: 30px;">
+        <sc-for list="{{ tamanos }}" as="t" hint-placeholder-count="6">
+          <div style="display: flex; align-items: center; gap: 14px; border: 1px solid #e4e1d9; border-radius: 12px; padding: 14px;">
+            <div style="width: 76px; height: 76px; flex: none; display: flex; align-items: center; justify-content: center; background: #f3f3fb; border-radius: 10px;">
+              <div style="{{ t.demo }}"></div>
+            </div>
+            <div style="min-width: 0;">
+              <p style="margin: 0 0 3px; font-size: 13px; font-weight: 600; color: #1c1c2b; text-wrap: pretty;">{{ t.nombre }}</p>
+              <p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 12px; color: #6c78ee;">{{ t.dim }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <p style="margin: 0 0 12px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: #9999ad;">SOMBRAS — elevación</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px;">
+        <sc-for list="{{ sombras }}" as="s" hint-placeholder-count="4">
+          <div>
+            <div style="{{ s.demo }}"></div>
+            <p style="margin: 16px 0 2px; font-size: 13px; font-weight: 600;">{{ s.nombre }}</p>
+            <sc-if value="{{ anot }}" hint-placeholder-val="{{ true }}"><p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; color: #9999ad; word-break: break-all;">{{ s.css }}</p></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+    </sc-if>
+
+    <!-- ===== COMPONENTES ===== -->
+    <sc-if value="{{ show.comp }}" hint-placeholder-val="{{ true }}">
+    <section style="background: #fff; border-radius: 18px; padding: 32px; margin-bottom: 26px; box-shadow: 0 1px 2px rgba(26,24,21,.04), 0 6px 22px rgba(40,40,80,.06);">
+      <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 24px;">
+        <span style="font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; color: #9999ad;">04</span>
+        <h2 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: 30px; font-weight: 600;">Componentes</h2>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px;">
+
+        <!-- Sellos / pills -->
+        <div>
+          <p style="margin: 0 0 12px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1px; color: #9999ad;">SELLOS / PILLS · radio 8</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <span style="display:inline-block; font-size:11px; font-weight:600; letter-spacing:.6px; padding:5px 11px; border-radius:8px; background:#eaebfc; color:#4a56c8;">PRÓXIMO</span>
+            <span style="display:inline-block; font-size:11px; font-weight:600; letter-spacing:.6px; padding:5px 11px; border-radius:8px; background:#fbeede; color:#b06a1a;">IMPORTANTE</span>
+            <span style="display:inline-block; font-size:11px; font-weight:600; letter-spacing:.6px; padding:5px 11px; border-radius:8px; background:#e3f1ec; color:#3d9b80;">SUGERENCIA</span>
+            <span style="display:inline-block; font-size:11px; font-weight:600; letter-spacing:.6px; padding:5px 11px; border-radius:8px; background:#fbe7ec; color:#c25571;">SENSIBLE</span>
+          </div>
+        </div>
+
+        <!-- Chips de situación -->
+        <div>
+          <p style="margin: 0 0 12px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1px; color: #9999ad;">CHIPS DE SITUACIÓN · radio 11</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <span style="white-space:nowrap; font-size:13px; font-weight:500; padding:8px 13px; border-radius:11px; background:#fbeede; color:#b06a1a;">Ansiedad por la beca</span>
+            <span style="white-space:nowrap; font-size:13px; font-weight:500; padding:8px 13px; border-radius:11px; background:#eaebfc; color:#4a56c8;">Mudanza en curso</span>
+            <span style="white-space:nowrap; font-size:13px; font-weight:500; padding:8px 13px; border-radius:11px; background:#fbe7ec; color:#c25571;">Durmiendo poco</span>
+          </div>
+        </div>
+
+        <!-- Avatares -->
+        <div>
+          <p style="margin: 0 0 12px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1px; color: #9999ad;">AVATARES · círculo + gradiente</p>
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="width:46px; height:46px; border-radius:50%; background:linear-gradient(135deg,#6c78ee,#8a7cf0); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:17px; box-shadow:0 6px 16px rgba(108,120,238,.35);">M</div>
+            <div style="width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,#6c78ee,#8a7cf0); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:15px;">M</div>
+            <div style="font-family:'Geist Mono',monospace; font-size:11px; color:#9999ad;">46 · 38</div>
+          </div>
+        </div>
+
+        <!-- CTAs -->
+        <div>
+          <p style="margin: 0 0 12px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1px; color: #9999ad;">CTA · 3 niveles</p>
+          <div style="display: flex; flex-direction: column; gap: 10px; max-width: 260px;">
+            <button class="uikit-btn" style="border:none; cursor:pointer; color:#fff; font-size:15px; font-weight:600; padding:13px; border-radius:16px; background:linear-gradient(135deg,#6c78ee,#8a7cf0); box-shadow:0 8px 20px rgba(108,120,238,.4);">Primario</button>
+            <button class="uikit-btn" style="cursor:pointer; color:#4a56c8; font-size:14px; font-weight:600; padding:11px; border-radius:11px; background:#fff; border:1px solid #6c78ee;">Secundario</button>
+            <button class="uikit-btn" style="cursor:pointer; color:#9999ad; font-size:11px; font-weight:600; letter-spacing:.5px; padding:7px 12px; border-radius:8px; background:#fff; border:1px solid #e4e1d9; align-self:flex-start;">TERCIARIO</button>
+          </div>
+        </div>
+
+        <!-- Selector de días: 4 estados -->
+        <div style="grid-column: 1 / -1;">
+          <p style="margin: 0 0 12px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1px; color: #9999ad;">SELECTOR DE DÍAS · 4 estados (círculo 36 · punto 5)</p>
+          <div style="display: flex; gap: 22px; flex-wrap: wrap; background:#f3f3fb; border-radius:14px; padding:18px 22px;">
+            <sc-for list="{{ diasDemo }}" as="d" hint-placeholder-count="4">
+              <div style="display:flex; flex-direction:column; align-items:center; gap:7px;">
+                <span style="font-size:11px; font-weight:600; letter-spacing:.5px; {{ d.letra }}">M</span>
+                <span style="position:relative; width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:16px; font-weight:700; {{ d.circ }}">
+                  18<span style="{{ d.dot }}"></span>
+                </span>
+                <sc-if value="{{ anot }}" hint-placeholder-val="{{ true }}"><span style="font-size:11px; color:#9999ad; max-width:96px; text-align:center; text-wrap:pretty;">{{ d.cap }}</span></sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- Card de recomendación -->
+        <div style="grid-column: 1 / -1;">
+          <p style="margin: 0 0 12px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1px; color: #9999ad;">CARD DE RECOMENDACIÓN · ancho 246 · radio 18</p>
+          <div style="display:flex; flex-direction:column; width:246px; border-radius:18px; padding:13px 15px; background:linear-gradient(135deg,#eef0fe 0%,#f4ecfe 52%,#e9f2fe 100%); border:1px solid rgba(124,124,240,.16); box-shadow:0 6px 20px rgba(108,120,238,.1);">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:9px;">
+              <span style="font-family:'Geist Mono',monospace; font-size:9px; font-weight:600; letter-spacing:.5px; color:#7a7a93;">SUEÑO · ÁNIMO</span>
+              <div style="display:flex; gap:5px;">
+                <button class="uikit-btn" style="width:26px; height:26px; border-radius:50%; border:none; cursor:pointer; background:#6c78ee; color:#fff; display:flex; align-items:center; justify-content:center;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                </button>
+                <button class="uikit-btn" style="width:26px; height:26px; border-radius:50%; border:none; cursor:pointer; background:rgba(120,120,150,.12); color:#8a8aa0; display:flex; align-items:center; justify-content:center;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </button>
+              </div>
+            </div>
+            <p style="margin:0; font-size:13.5px; line-height:1.4; color:#33334a; text-wrap:pretty;">Noté que esta semana te dormiste a horas muy distintas. ¿Puede ser que por eso te sientas más cansado?</p>
+          </div>
+        </div>
+
+        <!-- Barra de navegación -->
+        <div style="grid-column: 1 / -1;">
+          <p style="margin: 0 0 12px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1px; color: #9999ad;">NAVEGACIÓN FLOTANTE · radio 30 · centro 52</p>
+          <div style="background:#f3f3fb; border-radius:14px; padding:24px; display:flex; justify-content:center;">
+            <div style="display:flex; align-items:center; gap:24px; background:rgba(255,255,255,.92); backdrop-filter:blur(16px); border:1px solid rgba(108,120,238,.12); border-radius:30px; padding:12px 22px; box-shadow:0 14px 36px rgba(50,50,90,.16);">
+              <button class="uikit-btn" style="background:none; border:none; cursor:pointer; padding:4px; display:flex; color:#6c78ee;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7M6 9.5V20h12V9.5"/></svg></button>
+              <button class="uikit-btn" style="background:none; border:none; cursor:pointer; padding:4px; display:flex; color:#c4c4d4;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3.5v8.5l6 6"/></svg></button>
+              <button class="uikit-btn" style="width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg,#6c78ee,#8a7cf0); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 16px rgba(108,120,238,.5); margin:0 -2px;"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 20.5l1.5-5.2A8.5 8.5 0 1 1 21 11.5z"/><path d="M8.5 11h7M8.5 14h4"/></svg></button>
+              <button class="uikit-btn" style="background:none; border:none; cursor:pointer; padding:4px; display:flex; color:#c4c4d4;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r="0.6" fill="currentColor"/><circle cx="15" cy="10" r="0.6" fill="currentColor"/><path d="M8.5 14.5a4 4 0 0 0 7 0"/></svg></button>
+              <button class="uikit-btn" style="background:none; border:none; cursor:pointer; padding:4px; display:flex; color:#c4c4d4;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M6 8.5v1.5a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V8.5M12 13v2.5"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    </sc-if>
+
+    <!-- ===== ANIMACIONES ===== -->
+    <sc-if value="{{ show.anim }}" hint-placeholder-val="{{ true }}">
+    <section style="background: #fff; border-radius: 18px; padding: 32px; margin-bottom: 8px; box-shadow: 0 1px 2px rgba(26,24,21,.04), 0 6px 22px rgba(40,40,80,.06);">
+      <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 22px;">
+        <span style="font-family: 'Geist Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; color: #9999ad;">05</span>
+        <h2 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: 30px; font-weight: 600;">Movimiento</h2>
+      </div>
+
+      <p style="margin: 0 0 16px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: #9999ad;">DURACIONES &amp; EASING — estándar</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-bottom: 30px;">
+        <sc-for list="{{ duraciones }}" as="d" hint-placeholder-count="5">
+          <div style="border: 1px solid #e4e1d9; border-radius: 12px; padding: 14px 16px;">
+            <p style="margin: 0 0 3px; font-family: 'Geist Mono', monospace; font-size: 14px; font-weight: 600; color: #6c78ee;">{{ d.val }}</p>
+            <p style="margin: 0 0 4px; font-size: 13px; font-weight: 600;">{{ d.nombre }}</p>
+            <sc-if value="{{ anot }}" hint-placeholder-val="{{ true }}"><p style="margin: 0; font-size: 12px; color: #9999ad; text-wrap: pretty;">{{ d.uso }}</p></sc-if>
+          </div>
+        </sc-for>
+      </div>
+
+      <p style="margin: 0 0 16px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: #9999ad;">DEMOS EN VIVO — pasá el mouse / mirá el loop</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 18px;">
+        <div style="border: 1px solid #e4e1d9; border-radius: 12px; padding: 20px; width: 200px; text-align: center;">
+          <div style="height: 70px; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 54px; height: 54px; border-radius: 16px; background: linear-gradient(135deg,#6c78ee,#8a7cf0); animation: flotar 2.4s ease-in-out infinite alternate;"></div>
+          </div>
+          <p style="margin: 14px 0 2px; font-size: 13px; font-weight: 600;">flotar</p>
+          <p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; color: #9999ad;">entrada de pantalla · .3s</p>
+        </div>
+        <div style="border: 1px solid #e4e1d9; border-radius: 12px; padding: 20px; width: 200px; text-align: center;">
+          <div style="height: 70px; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 16px; height: 16px; border-radius: 50%; background: #6c78ee; animation: latido 1.6s ease-in-out infinite;"></div>
+          </div>
+          <p style="margin: 14px 0 2px; font-size: 13px; font-weight: 600;">latido</p>
+          <p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; color: #9999ad;">punto "en vivo" · 1.6s loop</p>
+        </div>
+        <div style="border: 1px solid #e4e1d9; border-radius: 12px; padding: 20px; width: 200px; text-align: center;">
+          <div style="height: 70px; display: flex; align-items: center; justify-content: center;">
+            <button class="uikit-btn" style="border:none; cursor:pointer; color:#fff; font-size:14px; font-weight:600; padding:11px 20px; border-radius:14px; background:linear-gradient(135deg,#6c78ee,#8a7cf0);">Apretame</button>
+          </div>
+          <p style="margin: 14px 0 2px; font-size: 13px; font-weight: 600;">:active</p>
+          <p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; color: #9999ad;">scale(.95) · brillo .92 · .12s</p>
+        </div>
+        <div style="border: 1px solid #e4e1d9; border-radius: 12px; padding: 20px; width: 200px; text-align: center;">
+          <div style="height: 70px; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 54px; height: 54px; border-radius: 50%; background: #fff; border: 2px solid #6c78ee; animation: resplandor 1.8s ease-in-out infinite;"></div>
+          </div>
+          <p style="margin: 14px 0 2px; font-size: 13px; font-weight: 600;">resplandor</p>
+          <p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; color: #9999ad;">grabando voz · 1.6s loop</p>
+        </div>
+      </div>
+    </section>
+    </sc-if>
+
+    <p style="margin: 32px 4px 0; font-family: 'Geist Mono', monospace; font-size: 11px; color: #9999ad;">Bitácora de Vida · UI Kit — fiel al prototipo «Bitácora Simple». Todos los valores viven en <span style="color:#6c78ee;">globals.css @theme</span>.</p>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:900},&quot;seccion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;todo&quot;,&quot;colores&quot;,&quot;tipo&quot;,&quot;medidas&quot;,&quot;componentes&quot;,&quot;animaciones&quot;],&quot;default&quot;:&quot;todo&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Vista&quot;},&quot;anotaciones&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vista&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const anot = this.props.anotaciones ?? true;
+    const v = this.props.seccion ?? 'todo';
+    const show = {
+      colores: v === 'todo' || v === 'colores',
+      tipo:    v === 'todo' || v === 'tipo',
+      medidas: v === 'todo' || v === 'medidas',
+      comp:    v === 'todo' || v === 'componentes',
+      anim:    v === 'todo' || v === 'animaciones',
+    };
+
+    const sw = (hex, border) => `height:64px; background:${hex};` + (border ? ' box-shadow: inset 0 0 0 1px #e4e1d9;' : '');
+
+    const fondos = [
+      { hex: '#f3f3fb', tok: '--color-lavanda',   uso: 'Fondo de la app',          swatch: sw('#f3f3fb', true) },
+      { hex: '#e3e3f1', tok: '--color-lavanda-2', uso: 'Fondo detrás de tarjetas', swatch: sw('#e3e3f1', true) },
+      { hex: '#ffffff', tok: '--color-blanco',    uso: 'Superficie de tarjetas',   swatch: sw('#ffffff', true) },
+    ];
+    const textos = [
+      { hex: '#1c1c2b', tok: '--color-tinta',      uso: 'Texto principal',         swatch: sw('#1c1c2b') },
+      { hex: '#56566c', tok: '--color-tinta-soft', uso: 'Texto secundario',        swatch: sw('#56566c') },
+      { hex: '#9999ad', tok: '--color-niebla',     uso: 'Labels / metadata',       swatch: sw('#9999ad') },
+      { hex: '#c4c4d4', tok: '--color-niebla-2',   uso: 'Iconos inactivos',        swatch: sw('#c4c4d4') },
+      { hex: '#b0b0c0', tok: '--color-niebla-3',   uso: 'Letras de días inactivos',swatch: sw('#b0b0c0') },
+    ];
+    const iris = [
+      { hex: '#6c78ee', tok: '--color-iris',      uso: 'Acento principal',        swatch: sw('#6c78ee') },
+      { hex: '#8a7cf0', tok: '--color-iris-2',    uso: '2º stop del gradiente',   swatch: sw('#8a7cf0') },
+      { hex: '#eaebfc', tok: '--color-iris-soft', uso: 'Tinte claro (chips)',     swatch: sw('#eaebfc', true) },
+      { hex: '#4a56c8', tok: '--color-iris-deep', uso: 'Texto lila sobre claro',  swatch: sw('#4a56c8') },
+    ];
+    const semDef = [
+      { nombre: 'Verde',  par: '#3d9b80 · #e3f1ec', solid: '#3d9b80', tint: '#e3f1ec', uso: 'Salud · confirmado · idea' },
+      { nombre: 'Oro',    par: '#b06a1a · #fbeede', solid: '#b06a1a', tint: '#fbeede', uso: 'Mails · importante' },
+      { nombre: 'Rosa',   par: '#c25571 · #fbe7ec', solid: '#c25571', tint: '#fbe7ec', uso: 'Contexto · sensible' },
+      { nombre: 'Alerta', par: '#e5484d · sin tinte', solid: '#e5484d', tint: '#fff', uso: 'Evento cercano (punto rojo)' },
+    ];
+    const semanticos = semDef.map(s => ({
+      ...s,
+      solid:  `flex:1; background:${s.solid};`,
+      tintSw: `width:64px; flex:none; background:${s.tint}; box-shadow: inset 0 0 0 1px #e4e1d9;`,
+    }));
+
+    const tipos = [
+      { nivel: 'Título de pantalla', spec: "Newsreader · 43px · 600", txt: 'Hoy', sample: "font-family:'Newsreader',Georgia,serif; font-size:43px; font-weight:600; letter-spacing:-.5px; line-height:1; color:#1c1c2b;" },
+      { nivel: 'Título de card',     spec: '22px · 700 · -.4px',      txt: 'Clase de alemán', sample: 'font-size:22px; font-weight:700; letter-spacing:-.4px; color:#1c1c2b;' },
+      { nivel: 'Sección / label',    spec: "Geist Mono · 11px · 600 · +1.5px · MAYÚS", txt: 'EN FOCO AHORA', sample: "font-family:'Geist Mono',monospace; font-size:11px; font-weight:600; letter-spacing:1.5px; color:#9999ad;" },
+      { nivel: 'Cuerpo',             spec: '14px · 1.42 · soft #56566c', txt: 'Tus mejores días de ánimo fueron los que dormiste temprano.', sample: 'font-size:14px; line-height:1.42; color:#56566c;' },
+      { nivel: 'Texto de reco',      spec: '13.5px · 1.4 · #33334a',  txt: '¿Puede ser que por eso te sientas más cansado?', sample: 'font-size:13.5px; line-height:1.4; color:#33334a;' },
+      { nivel: 'Metadata',           spec: "Geist Mono · 11–13px · niebla", txt: '11:30 · hace 1h', sample: "font-family:'Geist Mono',monospace; font-size:13px; font-weight:600; color:#9999ad;" },
+    ];
+
+    const rdemo = (r) => `width:64px; height:64px; margin:0 auto; background:linear-gradient(135deg,#6c78ee,#8a7cf0); border-radius:${r};`;
+    const radios = [
+      { px: '8px',  label: 'sm',   uso: 'Sellos, pills, tags',          demo: rdemo('8px') },
+      { px: '11px', label: 'md',   uso: 'Chips, botones chicos',        demo: rdemo('11px') },
+      { px: '16px', label: 'lg',   uso: 'CTA principal, foco interno',  demo: rdemo('16px') },
+      { px: '18px', label: 'xl',   uso: 'Cards de recomendación',       demo: rdemo('18px') },
+      { px: '30px', label: 'nav',  uso: 'Barra de navegación',          demo: rdemo('30px') },
+      { px: '50%',  label: 'full', uso: 'Avatares, botones circulares', demo: rdemo('50%') },
+    ];
+
+    const edemo = (n) => `width:${n}px; height:${n}px; background:#6c78ee; border-radius:4px;`;
+    const espacios = [
+      { px: '4',  uso: 'Ajuste óptico', demo: edemo(4) },
+      { px: '7',  uso: 'Icono + texto', demo: edemo(7) },
+      { px: '8',  uso: 'Gap base',      demo: edemo(8) },
+      { px: '12', uso: 'Entre filas',   demo: edemo(12) },
+      { px: '18', uso: 'Entre secciones', demo: edemo(18) },
+      { px: '22', uso: 'Padding pantalla', demo: edemo(22) },
+      { px: '28', uso: 'Bloques grandes', demo: edemo(28) },
+    ];
+
+    const box = (w, h, r, extra) => `width:${w}px; height:${h}px; border-radius:${r}; background:linear-gradient(135deg,#6c78ee,#8a7cf0);` + (extra || '');
+    const tamanos = [
+      { nombre: 'Avatar de perfil', dim: '46 × 46', demo: box(46, 46, '50%') },
+      { nombre: 'Avatar de header', dim: '38 × 38', demo: box(38, 38, '50%') },
+      { nombre: 'Botón central nav', dim: '52 × 52', demo: box(52, 52, '50%') },
+      { nombre: 'Círculo de día', dim: '36 × 36', demo: box(36, 36, '50%') },
+      { nombre: 'Botón mini (reco)', dim: '26 × 26', demo: box(26, 26, '50%') },
+      { nombre: 'Punto de evento', dim: '5 × 5', demo: 'width:10px;height:10px;border-radius:50%;background:#e5484d;' },
+      { nombre: 'Icono de nav', dim: '24 × 24', demo: 'width:24px;height:24px;border-radius:6px;background:#c4c4d4;' },
+      { nombre: 'Icono de foco', dim: '104 ∅', demo: box(60, 60, '50%') },
+    ];
+
+    const sdemo = (css) => `height:80px; border-radius:14px; background:#fff; box-shadow:${css};`;
+    const sombras = [
+      { nombre: 'Avatar / botón', css: '0 6px 16px rgba(108,120,238,.35)', demo: sdemo('0 6px 16px rgba(108,120,238,.35)') },
+      { nombre: 'Día seleccionado', css: '0 6px 14px rgba(108,120,238,.4)', demo: sdemo('0 6px 14px rgba(108,120,238,.4)') },
+      { nombre: 'Card de reco', css: '0 6px 20px rgba(108,120,238,.1)', demo: sdemo('0 6px 20px rgba(108,120,238,.1)') },
+      { nombre: 'Nav flotante', css: '0 14px 36px rgba(50,50,90,.16)', demo: sdemo('0 14px 36px rgba(50,50,90,.16)') },
+      { nombre: 'CTA grande', css: '0 8px 20px rgba(108,120,238,.4)', demo: sdemo('0 8px 20px rgba(108,120,238,.4)') },
+    ];
+
+    // selector de días — 4 estados
+    const letraOn = 'color:#6c78ee;', letraOff = 'color:#b0b0c0;';
+    const dot = 'position:absolute; bottom:1px; left:50%; transform:translateX(-50%); width:5px; height:5px; border-radius:50%; background:#e5484d;';
+    const diasDemo = [
+      { letra: letraOff, circ: 'color:#1c1c2b;', dot: 'display:none;', cap: 'Normal' },
+      { letra: letraOff, circ: 'color:#1c1c2b;', dot: dot, cap: 'Con evento (punto rojo)' },
+      { letra: letraOn,  circ: 'background:#6c78ee; color:#fff; box-shadow:0 6px 14px rgba(108,120,238,.4);', dot: 'display:none;', cap: 'Seleccionado' },
+      { letra: letraOn,  circ: 'background:#e5484d; color:#fff; box-shadow:0 6px 14px rgba(229,72,77,.4);', dot: 'display:none;', cap: 'Seleccionado + evento' },
+    ];
+
+    const duraciones = [
+      { val: '.12s', nombre: 'Micro / :active', uso: 'Press de botones y links (scale + brillo)' },
+      { val: '.18s', nombre: 'Control activo',  uso: 'Selección de día, cambio de tab' },
+      { val: '.25s', nombre: 'Aparecer',        uso: 'Entrada de cards, blur del header' },
+      { val: '.3s',  nombre: 'Flotar',          uso: 'Entrada de pantalla completa' },
+      { val: 'ease-out', nombre: 'Easing base', uso: 'Curva por defecto de todo el sistema' },
+    ];
+
+    return { anot, show, fondos, textos, iris, semanticos, tipos, radios, espacios, tamanos, sombras, diasDemo, duraciones };
+  }
+}
+</script>
+</body>
+</html>

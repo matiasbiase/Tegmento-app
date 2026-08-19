@@ -1,0 +1,58 @@
+{
+  "name": "bitacora-de-vida",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -H 0.0.0.0",
+    "dev:https": "next dev -H 0.0.0.0 --experimental-https --experimental-https-key certs/key.pem --experimental-https-cert certs/cert.pem",
+    "worker": "tsx src/worker.ts",
+    "app": "concurrently -n web,worker -c blue,yellow \"npm run dev:https\" \"tsx watch src/worker.ts\"",
+    "dev:ts": "next dev -H 0.0.0.0 --experimental-https --experimental-https-key certs/$TAILNET_HOST.key --experimental-https-cert certs/$TAILNET_HOST.crt",
+    "app:ts": "concurrently -n web,worker -c blue,yellow \"npm run dev:ts\" \"tsx watch src/worker.ts\"",
+    "cert:ts": "cd certs && tailscale cert $TAILNET_HOST",
+    "build": "next build",
+    "build:check": "NEXT_DIST_DIR=.next-verify next build && rm -rf .next-verify",
+    "dev:2": "NEXT_DIST_DIR=.next-2 next dev -H 0.0.0.0 -p 3002",
+    "start": "next start",
+    "test": "vitest run",
+    "db:push": "drizzle-kit push",
+    "db:seed": "tsx src/lib/db/seed.ts",
+    "neurona": "node scripts/gen-neurona.mjs --escribir && node scripts/gen-icons.mjs",
+    "icons": "node scripts/gen-icons.mjs"
+  },
+  "dependencies": {
+    "@capacitor/cli": "^8.4.2",
+    "@capacitor/core": "^8.4.2",
+    "@capacitor/ios": "^8.4.2",
+    "@capacitor/local-notifications": "^8.2.1",
+    "@ebarooni/capacitor-calendar": "^8.2.0",
+    "better-sqlite3": "^11.10.0",
+    "capacitor-health": "^8.1.2",
+    "concurrently": "^10.0.3",
+    "drizzle-orm": "^0.45.2",
+    "geist": "^1.4.0",
+    "next": "^15.5.21",
+    "node-cron": "^4.2.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.0.0",
+    "@types/node-cron": "^3.0.11",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "drizzle-kit": "^0.31.0",
+    "sharp": "^0.35.0",
+    "tailwindcss": "^4.1.0",
+    "tsx": "^4.19.0",
+    "typescript": "5.8.2",
+    "vitest": "^3.1.0"
+  },
+  "overrides": {
+    "postcss": "^8.5.22",
+    "sharp": "$sharp",
+    "esbuild": "^0.28.1"
+  }
+}

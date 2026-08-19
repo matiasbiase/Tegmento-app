@@ -1,0 +1,17 @@
+# El buscador local que usa la estimación de Objetivos (ver src/lib/buscar.ts).
+#
+# Levantarlo:   docker compose -f docker/searxng/compose.yml up -d
+# Bajarlo:      docker compose -f docker/searxng/compose.yml down
+#
+# ⚠️ APAGADO NO ROMPE NADA. `buscar()` devuelve null y la app sigue con la
+# memoria del modelo, marcando la cifra como "sin verificar". No hace falta
+# tener Docker prendido para usar el diario.
+services:
+  searxng:
+    image: searxng/searxng:latest
+    container_name: tegmento-searxng
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./:/etc/searxng
