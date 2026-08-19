@@ -1,3 +1,10 @@
+/**
+ * The session cookie: a payload plus an HMAC over it, nothing else.
+ *
+ * No session table and no server-side store — a single-user, self-hosted app
+ * doesn't need either, and the thing it must never do is trust a cookie it
+ * didn't sign.
+ */
 const enc = new TextEncoder();
 
 async function hmac(secret: string, data: string): Promise<string> {

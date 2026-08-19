@@ -1,3 +1,11 @@
+/**
+ * The background half of the app.
+ *
+ * Runs beside the web server on its own process: syncing Google, closing chats
+ * that went quiet, running the analyst over what you wrote, estimating new
+ * goals. Nothing here is allowed to block a request — the web side stays
+ * responsive precisely because this exists.
+ */
 import cron from 'node-cron';
 import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db/client';

@@ -1,4 +1,12 @@
 /**
+ * The rules of the assistant's deck, kept out of the components on purpose.
+ *
+ * The deck is drawn by two components at once — the strip above the input paints
+ * the question, the row below paints the buttons and the dots — so a rule that
+ * used to be one loose line inside a render would now be two implementations
+ * drifting apart at the first edit. The Spanish note below tells that story.
+ */
+/**
  * LAS REGLAS DE LA BARAJA DEL BOT, AHORA QUE VIVE PEGADA A LA BARRA DE ESCRIBIR.
  *
  * Salieron de adentro de `TarjetasBot` el 12/08, cuando se aplicó la propuesta C

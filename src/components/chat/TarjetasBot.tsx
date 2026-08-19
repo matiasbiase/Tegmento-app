@@ -1,3 +1,14 @@
+/**
+ * The assistant's cards: what it has to say, stacked as a deck you swipe.
+ *
+ * The rules for the deck itself live in `src/lib/baraja-bot.ts` and not here,
+ * because the deck is drawn by two components at once — see that file's note.
+ *
+ * The avatar is deliberately drawn from the outer grid rather than inside each
+ * card: one avatar that never remounts, instead of one per card whose animation
+ * would restart on every swipe. What sits inside the cards are empty floated
+ * boxes, so the text wraps around a hole the avatar happens to occupy.
+ */
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';

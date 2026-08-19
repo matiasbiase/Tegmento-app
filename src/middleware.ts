@@ -1,3 +1,11 @@
+/**
+ * The gate. Every route goes through here.
+ *
+ * A signed session cookie is the only way in, and if `SESSION_SECRET` is
+ * missing or shorter than 16 characters nothing is authorised at all — a weak
+ * secret would mean forgeable sessions, so the safe answer is to refuse rather
+ * than to degrade.
+ */
 import { NextRequest, NextResponse } from 'next/server';
 import { verifySession } from '@/lib/auth/session';
 

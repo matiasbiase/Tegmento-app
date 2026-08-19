@@ -1,3 +1,10 @@
+/**
+ * The analyst: the pass that looks across everything and says something.
+ *
+ * The model is asked for language, never for arithmetic or state — the numbers
+ * are computed here, in TypeScript, and what the model gets is the job of
+ * putting them into a sentence. That split is why this file is testable at all.
+ */
 import { desc, eq, gte, isNull } from 'drizzle-orm';
 import { db } from '@/lib/db/client';
 import { analisis, animoCheckins, areas, bitacora, config, conocimiento, cuerpo, eventos, gastos, hechos, lineas, notas, objetivos, periodos, sugerencias } from '@/lib/db/schema';

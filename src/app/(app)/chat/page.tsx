@@ -1,3 +1,11 @@
+/**
+ * The home screen, and the reason the app is shaped the way it is.
+ *
+ * It's a chat, not a dashboard: you write what happened and the app files it —
+ * expenses, activities, mood, notes, goals. Everything this page assembles is
+ * in service of the next thing you might want to say, never of grading you on
+ * what you already did.
+ */
 import { and, desc, eq, gte, inArray, isNotNull, isNull } from 'drizzle-orm';
 import { db } from '@/lib/db/client';
 import { analisis, animoCheckins, chatMensajes, chats, config, cuerpo, gastos, hechos as hechosTabla, lineas, marcas, aportes, objetivos, sugerencias, temas } from '@/lib/db/schema';

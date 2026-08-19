@@ -1,4 +1,11 @@
 /**
+ * Re-reading: something you wrote a while ago, handed back to you.
+ *
+ * The one piece of the home screen that gives before it asks — everything else
+ * there wanted something from you first. The Spanish note below has the numbers
+ * that made the case, measured over 47 days of real use.
+ */
+/**
  * LA RELECTURA: lo que escribiste hace un tiempo, devuelto.
  *
  * ⚠️⚠️ ES LA ÚNICA PIEZA DEL HOME QUE **DEVUELVE ANTES DE PEDIR**, y por eso

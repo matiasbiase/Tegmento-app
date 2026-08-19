@@ -1,3 +1,12 @@
+/**
+ * AES-256-GCM, used for one thing: the Google tokens sitting on disk.
+ *
+ * The app reads Calendar and Gmail, which means it holds tokens that would give
+ * someone your mail. They never touch the database in the clear. The key is
+ * derived with scrypt from a master password kept outside the repo, and GCM
+ * gives an auth tag, so a tampered token fails to decrypt instead of decrypting
+ * into something wrong.
+ */
 import { createCipheriv, createDecipheriv, randomBytes, scryptSync } from 'node:crypto';
 
 function clave(secreto: string): Buffer {

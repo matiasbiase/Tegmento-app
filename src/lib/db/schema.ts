@@ -1,3 +1,15 @@
+/**
+ * The whole data model, in one file: Drizzle over SQLite.
+ *
+ * Worth reading first — the shape of the app is here. Life areas hold lines of
+ * work, and the chat writes into facts, activities, expenses, mood and body
+ * from what you type in plain language.
+ *
+ * ⚠️ Editing this file is not enough on its own. `npm run db:push` applies it
+ * to the database; skip that and the app breaks at runtime while typecheck,
+ * tests and build all still pass — none of the three ever touch the real
+ * database.
+ */
 import { sqliteTable, text, integer, real, primaryKey, unique, type AnySQLiteColumn } from 'drizzle-orm/sqlite-core';
 
 export const areas = sqliteTable('areas', {
